@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PokéRogue Starter Rater</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <nav>
+      <a href="https://pokerogue.net" target="_blank" class="logo-link">
+        <img src="images/logo.png" alt="Logo" />
+      </a>
+      <span class="site-name">PokéRogue Starter Rater</span>
+    </nav>
+    
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="pokemon-search" autocomplete="off" placeholder="Search for a Starter..." />
+        <div class="suggestions"></div>
+        <!-- Ajout de la div pour les suggestions -->
+      </div>
+      <button id="random-pokemon">
+        <span>Random</span>
+      </button>
+      <button id="random-unrated-pokemon">
+        <span>Not rated</span>
+      </button>
+    </div>
+    <div class="container">
+      <div class="pokemon-info-card">
+        <div class="pokemon-header">
+          <div class="pokemon-name" id="pokemon-name"></div>
+        </div>
+        <div class="pokemon-content">
+          <div class="pokemon-main-info">
+            <div class="pokemon-section">
+              <div class="pokemon-main-row">
+                <div class="pokemon-left">
+                  <div class="pokemon-image-container">
+                    <img id="pokemon-image" src="" alt="Pokemon" />
+                  </div>
+                  <div class="pokemon-types"></div>
+                </div>
+                <div id="pokemon-ability" class="pokemon-ability">
+                  <div class="info-section">
+                    <h3>Ability</h3>
+                    <div class="ability-badge"></div>
+                  </div>
+                  <div class="info-section">
+                    <h3>Cost</h3>
+                    <div class="cost-badge"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="pokemon-egg-moves" class="pokemon-egg-moves">
+              <h3>Egg Moves</h3>
+              <div class="egg-moves-table"></div>
+            </div>
+          </div>
+
+          <div class="pokemon-ratings-overview">
+            <div class="global-stats">
+              <div class="no-ratings">No rating yet</div>
+              <div class="global-rating">
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip">Overall</div>
+                  <div class="mini-rating-bar">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+                <div class="separator"></div>
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Pokémon</div>
+                  <div class="mini-rating-bar" data-type="power">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Cost</div>
+                  <div class="mini-rating-bar" data-type="cost">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Egg Moves</div>
+                  <div class="mini-rating-bar" data-type="egg_moves">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Passive</div>
+                  <div class="mini-rating-bar" data-type="ability">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+                <div class="mini-rating-group">
+                  <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Out of the box</div>
+                  <div class="mini-rating-bar" data-type="out_of_the_box">
+                    <div class="mini-rating-fill"></div>
+                    <span class="rating-value">0/10</span>
+                  </div>
+                </div>
+
+                <div class="vote-count">Votes: <span id="vote-count">0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rating-section">
+        <h2>Rate this Pokémon</h2>
+        <div class="rating-container">
+          <div class="rating-group">
+            <label>
+              Pokémon
+              <span class="tooltip-trigger">?</span>
+            </label>
+            <div class="rating-bar" data-criteria="base" data-value="0">
+              <div class="rating-fill"></div>
+              <span class="rating-value">0/10</span>
+            </div>
+          </div>
+
+          <div class="rating-group">
+            <label>
+              Cost
+              <span class="tooltip-trigger">?</span>
+            </label>
+            <div class="rating-bar" data-criteria="cost" data-value="0">
+              <div class="rating-fill"></div>
+              <span class="rating-value">0/10</span>
+            </div>
+          </div>
+
+          <div class="rating-group">
+            <label>
+              Egg Moves
+              <span class="tooltip-trigger">?</span>
+            </label>
+            <div class="rating-bar" data-criteria="eggMoves" data-value="0">
+              <div class="rating-fill"></div>
+              <span class="rating-value">0/10</span>
+            </div>
+          </div>
+
+          <div class="rating-group">
+            <label>
+              Passive
+              <span class="tooltip-trigger">?</span>
+            </label>
+            <div class="rating-bar" data-criteria="passive" data-value="0">
+              <div class="rating-fill"></div>
+              <span class="rating-value">0/10</span>
+            </div>
+          </div>
+          <div class="rating-group">
+            <label>
+              Out of the box
+              <span class="tooltip-trigger">?</span>
+            </label>
+            <div class="rating-bar" data-criteria="outOfTheBox" data-value="0">
+              <div class="rating-fill"></div>
+              <span class="rating-value">0/10</span>
+            </div>
+          </div>
+
+          <button id="submit-rating">Rate</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="top-rated-container">
+      <h2>Top 10</h2>
+      <div class="top-rated-grid" id="top-rated-grid"></div>
+    </div>
+
+    <div class="top-rated-container">
+      <h2>Worst 10</h2>
+      <div class="top-rated-grid" id="worst-rated-grid"></div>
+    </div>
+
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>About</h3>
+          <p>PokéRogue Starter Rater est un outil permettant de noter les différents starters de PokéRogue. Cet outil n'est pas affilié à PokéRogue.</p>
+        </div>
+        <div class="footer-section">
+          <h3>Links</h3>
+          <ul>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Credits</h3>
+          <p>Created by Akima</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 PokéRogue Starter Rater. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="scripts/main.js"></script>
+  </body>
+</html>

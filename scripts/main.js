@@ -19,6 +19,7 @@ const API_URLS = {
   SEARCH_STARTER: "https://pokeapi.crabdance.com/search-starter/en",
   GET_TOP_RATED: "https://pokeapi.crabdance.com/top-rated",
   GET_WORST_RATED: "https://pokeapi.crabdance.com/worst-rated",
+  GET_TOTAL_VOTES: "https://pokeapi.crabdance.com/total-votes",
 };
 
 // Centralisation des descriptions des critères
@@ -27,18 +28,51 @@ const CRITERIA_DESCRIPTIONS = {
   cost: "Cost-effectiveness of the Pokémon.",
   eggMoves: "How valuable the egg moves are for the Pokémon's overall effectiveness, whether they provide extra coverage or enhance its power significantly.",
   passive: "How impactful and game-changing the Pokémon's passive ability is.",
-  outOfTheBox: "How viable the Pokémon is without requiring significant time, items, or evolution.",
+  outOfTheBox: "How viable the Pokémon is without requiring TMs, items, or evolution.",
 };
 
 let POKEMON_ID = "1";
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeRatingBars();
-  loadPokemon(POKEMON_ID);
-  setupEventListeners();
-  loadTopRatedPokemons();
-  loadWorstRatedPokemons();
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+    // Charge toutes les données initiales en parallèle
+    const urlParams = new URLSearchParams(window.location.search);
+    const pokemonId = urlParams.get('pokemon');
+
+    await Promise.all([
+      loadTotalVotes(),
+      loadTopRatedPokemons(),
+      loadWorstRatedPokemons(),
+      pokemonId ? loadPokemon(pokemonId) : Promise.resolve()
+    ]);
+
+    // Configure les event listeners une fois les données chargées
+    setupEventListeners();
+    
+    // Cache le loader et affiche le contenu
+    document.getElementById('loader').style.display = 'none';
+    document.getElementById('main-content').style.display = 'block';
+  } catch (error) {
+    console.error("Erreur lors du chargement initial:", error);
+    // Afficher un message d'erreur à l'utilisateur
+    alert("Une erreur est survenue lors du chargement des données");
+  }
 });
+
+async function loadTotalVotes() {
+  try {
+    const response = await fetch(API_URLS.GET_TOTAL_VOTES);
+    const data = await response.json();
+    const votes = data[0].total_votes;
+    
+    document.getElementById("total-votes").innerHTML = `
+      <h4>Over <span class="vote-highlight">${votes}</span> votes already!</h4>
+    `;
+    return response;
+  } catch (error) {
+    console.error("Erreur lors de la récupération du total des votes:", error);
+  }
+}
 
 function initializeRatingBars() {
   document.querySelectorAll(".rating-bar").forEach((bar) => {
@@ -122,14 +156,12 @@ function saveVotedPokemon(pokemonId) {
 function setupSearchHandlers() {
   const searchInput = document.getElementById("pokemon-search");
   const suggestionsContainer = document.querySelector(".suggestions");
-  let searchTimeout;
 
   searchInput.addEventListener("input", (e) => {
-    clearTimeout(searchTimeout);
     suggestionsContainer.innerHTML = "";
     if (e.target.value.length >= 3) {
       suggestionsContainer.style.display = "block";
-      searchTimeout = setTimeout(() => fetchSuggestions(e.target.value, suggestionsContainer), 300);
+      fetchSuggestions(e.target.value, suggestionsContainer);
     } else {
       suggestionsContainer.style.display = "none";
     }
@@ -158,8 +190,8 @@ function createSuggestionItem(pokemon, container) {
   suggestion.className = "suggestion-item";
   suggestion.textContent = pokemon.name_en;
   suggestion.addEventListener("click", () => {
-    document.getElementById("pokemon-search").value = pokemon.name_en;
-    loadPokemon(pokemon.id);
+    document.getElementById("pokemon-search").value = ""; // Reset searchbox
+    window.location.href = `?pokemon=${pokemon.id}`; // Change l'URL au lieu de loadPokemon direct
     container.style.display = "none";
   });
   container.appendChild(suggestion);
@@ -175,8 +207,7 @@ async function getUnratedRandomStarter() {
     const response = await fetch(API_URLS.GET_UNRATED_RANDOM_STARTER);
     const data = await response.json();
     if (data.id) {
-      await loadPokemon(data.id);
-      initializeRatingBars();
+      window.location.href = `?pokemon=${data.id}`; // Redirection avec paramètre
     }
   } catch (error) {
     console.error("Erreur lors de la récupération du starter non noté:", error);
@@ -185,6 +216,11 @@ async function getUnratedRandomStarter() {
 
 async function loadPokemon(pokemonId) {
   POKEMON_ID = pokemonId;
+
+  // Masquer le message de bienvenue et afficher la carte Pokémon et la section de vote
+  document.querySelector('.welcome-div').classList.add('hidden');
+  document.querySelector('.pokemon-info-card').classList.remove('hidden');
+  document.querySelector('.rating-section').classList.remove('hidden');
 
   try {
     const [pokemonResponse, ratingsResponse] = await Promise.all([fetch(`${API_URLS.GET_POKEMON}/${pokemonId}`), fetch(`${API_URLS.GET_RATINGS}/${pokemonId}`)]);
@@ -230,7 +266,7 @@ async function loadPokemon(pokemonId) {
     const abilityContainer = document.getElementById("pokemon-ability");
     abilityContainer.innerHTML = `
             <div class="info-section">
-                <h3>Ability</h3>
+                <h3>Passive</h3>
                 <div class="ability-badge" data-tooltip="${pokemon.passive.description}">
                     ${pokemon.passive.name}
                 </div>
@@ -395,8 +431,7 @@ async function getRandomStarter() {
     const response = await fetch(API_URLS.GET_RANDOM_STARTER);
     const data = await response.json();
     if (data.id) {
-      await loadPokemon(data.id);
-      initializeRatingBars();
+      window.location.href = `?pokemon=${data.id}`; // Redirection avec paramètre
     }
   } catch (error) {
     console.error("Erreur lors de la récupération du starter aléatoire:", error);
@@ -413,6 +448,7 @@ async function loadTopRatedPokemons() {
     topRated.sort((a, b) => b.global_rating - a.global_rating);
 
     displayTopRatedPokemons(topRated);
+    return response;
   } catch (error) {
     console.error("Erreur lors du chargement des Pokémon les mieux notés:", error);
   }
@@ -428,6 +464,7 @@ async function loadWorstRatedPokemons() {
     worstRated.sort((a, b) => a.global_rating - b.global_rating);
 
     displayWorstRatedPokemons(worstRated);
+    return response;
   } catch (error) {
     console.error("Erreur lors du chargement des Pokémon les pire notés:", error);
   }
@@ -441,9 +478,8 @@ function displayTopRatedPokemons(pokemons) {
   pokemons.forEach((pokemon, index) => {
     const item = document.createElement("div");
     item.className = "top-rated-item";
-    item.onclick = async () => {
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll vers le haut
-      await loadPokemon(pokemon.id);
+    item.onclick = () => {
+      window.location.href = `?pokemon=${pokemon.id}`; // Redirection avec paramètre
     };
 
     const spriteUrl = getPokemonSprite(pokemon.id);
@@ -453,7 +489,7 @@ function displayTopRatedPokemons(pokemons) {
       item.innerHTML = `
     <div class="rank-badge">#${index + 1}</div>
     <img src="${spriteUrl}" alt="${pokemon.id}">
-    <div class="rating">${pokemon.global_rating.toFixed(1)}/10</div>
+    <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
   `;
     });
 
@@ -469,9 +505,8 @@ function displayWorstRatedPokemons(pokemons) {
   pokemons.forEach((pokemon, index) => {
     const item = document.createElement("div");
     item.className = "top-rated-item";
-    item.onclick = async () => {
-      window.scrollTo({ top: 0, behavior: "smooth" }); // Scroll vers le haut
-      await loadPokemon(pokemon.id);
+    item.onclick = () => {
+      window.location.href = `?pokemon=${pokemon.id}`; // Redirection avec paramètre
     };
 
     const spriteUrl = getPokemonSprite(pokemon.id);
@@ -481,7 +516,7 @@ function displayWorstRatedPokemons(pokemons) {
       item.innerHTML = `
     <div class="rank-badge">#${index + 1}</div>
     <img src="${spriteUrl}" alt="${pokemon.id}">
-    <div class="rating">${pokemon.global_rating.toFixed(1)}/10</div>
+    <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
   `;
     });
 

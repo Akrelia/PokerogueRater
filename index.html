@@ -25,13 +25,20 @@
             <img src="images/gts.png" alt="GTS" class="gts-icon" />
           </a>
         </div>
+        <div class="language-selector">
+          <select onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+          </select>
+        </div>
       </nav>
 
       <div class="search-container">
         <div class="search-box">
           <input type="text" id="pokemon-search" autocomplete="off" placeholder="Search for a Starter..." />
           <div class="suggestions"></div>
-          <!-- Ajout de la div pour les suggestions -->
         </div>
         <button id="random-pokemon">
           <span>Random</span>
@@ -237,6 +244,7 @@
         </div>
       </footer>
     </div>
+    <script src="scripts/translations.js"></script>
     <script src="scripts/main.js"></script>
   </body>
 </html>

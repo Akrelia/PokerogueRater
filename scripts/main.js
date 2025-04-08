@@ -1,4 +1,5 @@
-// Mise à jour des URLs de l'API
+let selectedLanguage = "en";
+
 const API_URLS2 = {
   GET_POKEMON: "http://localhost:27350/pokemons/en",
   SUBMIT_RATING: "http://localhost:27350/ratings",
@@ -11,33 +12,119 @@ const API_URLS2 = {
 };
 
 const API_URLS = {
-  GET_POKEMON: "https://pokeapi.crabdance.com/pokemons/en",
+  GET_POKEMON: "https://pokeapi.crabdance.com/pokemons",
   SUBMIT_RATING: "https://pokeapi.crabdance.com/ratings",
   GET_RATINGS: "https://pokeapi.crabdance.com/ratings",
   GET_RANDOM_STARTER: "https://pokeapi.crabdance.com/random-starter",
   GET_UNRATED_RANDOM_STARTER: "https://pokeapi.crabdance.com/random-unrated-starter",
-  SEARCH_STARTER: "https://pokeapi.crabdance.com/search-starter/en",
+  SEARCH_STARTER: "https://pokeapi.crabdance.com/search-starter/",
   GET_TOP_RATED: "https://pokeapi.crabdance.com/top-rated",
   GET_WORST_RATED: "https://pokeapi.crabdance.com/worst-rated",
   GET_TOTAL_VOTES: "https://pokeapi.crabdance.com/total-votes",
 };
 
-// Centralisation des descriptions des critères
-const CRITERIA_DESCRIPTIONS = {
-  base: "How the Pokémon and its evolution are good, including base stats, abilities, and typing.",
-  cost: "Cost-effectiveness of the Pokémon.",
-  eggMoves: "How valuable the egg moves are for the Pokémon's overall effectiveness, whether they provide extra coverage or enhance its power significantly.",
-  passive: "How impactful and game-changing the Pokémon's passive ability is.",
-  outOfTheBox: "How viable the Pokémon is without requiring TMs, items, or evolution.",
-};
+function loadSavedLanguage() {
+  const savedLanguage = localStorage.getItem("selectedLanguage");
+  if (savedLanguage) {
+    selectedLanguage = savedLanguage;
+    document.querySelector(".language-selector select").value = savedLanguage;
+  }
+}
+
+function changeLanguage() {
+  const select = document.querySelector(".language-selector select");
+  selectedLanguage = select.value;
+  localStorage.setItem("selectedLanguage", selectedLanguage);
+  updateUIText();
+  if (POKEMON_ID) {
+    loadPokemon(POKEMON_ID);
+  }
+}
+
+function updateUIText() {
+  const t = translations[selectedLanguage];
+
+  document.querySelector(".site-name").textContent = t.siteTitle;
+  document.querySelector("#pokemon-search").placeholder = t.searchPlaceholder;
+  document.querySelector("#random-pokemon span").textContent = t.randomButton;
+  document.querySelector("#random-unrated-pokemon span").textContent = t.randomUnratedButton;
+
+  const welcomeHeader = document.querySelector(".welcome-header");
+  if (welcomeHeader) {
+    welcomeHeader.querySelector("h2").innerHTML = t.welcomeTitle;
+    welcomeHeader.querySelectorAll("p")[0].innerHTML = t.welcomeText;
+    welcomeHeader.querySelectorAll("p")[1].innerHTML = t.welcomeGoal;
+  }
+
+  document.querySelector(".rating-section h2").textContent = t.rateThisPokemon;
+  document.querySelector("#submit-rating").textContent = t.rateButton;
+  document.querySelector(".no-ratings").textContent = t.noRatingYet;
+
+  document.querySelector(".top-title").textContent = t.topTitle;
+  document.querySelector(".worst-title").textContent = t.worstTitle;
+
+  document.querySelector(".footer-section h3").textContent = t.about;
+  document.querySelector(".footer-section p").innerHTML = t.aboutText;
+
+  const footerSections = document.querySelectorAll('.footer-section h3');
+  footerSections[1].textContent = t.links || "Links";
+  const contactLink = document.querySelector('.footer-section a');
+  if (contactLink) {
+    contactLink.textContent = t.footer?.contact || "Contact";
+  }
+
+  document.querySelectorAll('.mini-rating-group .label-with-tooltip').forEach(label => {
+    const tooltipTrigger = label.querySelector('.tooltip-trigger');
+    if (tooltipTrigger) {
+      const type = label.closest('.mini-rating-group').querySelector('.mini-rating-bar').dataset.type;
+      const criteriaKey = getCriteriaKeyFromType(type);
+      if (criteriaKey && t.criteria[criteriaKey]) {
+        label.childNodes[1].textContent = t.criteria[criteriaKey] + ' ';
+      }
+    } else {
+      label.textContent = t.overall;
+    }
+  });
+
+  document.querySelectorAll('.rating-group label').forEach(label => {
+    const criteriaKey = getCriteriaKeyFromBar(label.nextElementSibling);
+    if (criteriaKey && t.criteria[criteriaKey]) {
+      label.childNodes[0].textContent = t.criteria[criteriaKey] + ' ';
+    }
+  });
+}
+
+function getCriteriaKeyFromType(type) {
+  const typeToKey = {
+    'power': 'pokemon',
+    'cost': 'cost',
+    'egg_moves': 'eggMoves',
+    'ability': 'passive',
+    'out_of_the_box': 'outOfBox'
+  };
+  return typeToKey[type];
+}
+
+function getCriteriaKeyFromBar(bar) {
+  const criteriaToKey = {
+    'base': 'pokemon',
+    'cost': 'cost',
+    'eggMoves': 'eggMoves',
+    'passive': 'passive',
+    'outOfTheBox': 'outOfBox'
+  };
+  return criteriaToKey[bar.dataset.criteria];
+}
 
 let POKEMON_ID = "1";
 
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    // Charge toutes les données initiales en parallèle
     const urlParams = new URLSearchParams(window.location.search);
     const pokemonId = urlParams.get('pokemon');
+
+    loadSavedLanguage();
+    updateUIText();
 
     await Promise.all([
       loadTotalVotes(),
@@ -46,15 +133,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       pokemonId ? loadPokemon(pokemonId) : Promise.resolve()
     ]);
 
-    // Configure les event listeners une fois les données chargées
     setupEventListeners();
-    
-    // Cache le loader et affiche le contenu
+
     document.getElementById('loader').style.display = 'none';
     document.getElementById('main-content').style.display = 'block';
   } catch (error) {
     console.error("Erreur lors du chargement initial:", error);
-    // Afficher un message d'erreur à l'utilisateur
     alert("Une erreur est survenue lors du chargement des données");
   }
 });
@@ -64,7 +148,7 @@ async function loadTotalVotes() {
     const response = await fetch(API_URLS.GET_TOTAL_VOTES);
     const data = await response.json();
     const votes = data[0].total_votes;
-    
+
     document.getElementById("total-votes").innerHTML = `
       <h4>Over <span class="vote-highlight">${votes}</span> votes already!</h4>
     `;
@@ -78,12 +162,11 @@ function initializeRatingBars() {
   document.querySelectorAll(".rating-bar").forEach((bar) => {
     resetRatingBar(bar);
 
-    // Déplacer le tooltip sur le trigger au lieu de la barre
     const criteria = bar.dataset.criteria;
-    if (criteria && CRITERIA_DESCRIPTIONS[criteria]) {
+    if (criteria && translations[selectedLanguage].criteriaDescriptions[criteria]) {
       const tooltipTrigger = bar.parentElement.querySelector('.tooltip-trigger');
       if (tooltipTrigger) {
-        tooltipTrigger.setAttribute("data-tooltip", CRITERIA_DESCRIPTIONS[criteria]);
+        tooltipTrigger.setAttribute("data-tooltip", translations[selectedLanguage].criteriaDescriptions[criteria]);
       }
     }
   });
@@ -103,6 +186,9 @@ function setupEventListeners() {
   setupSubmitButtonHandler();
   setupSearchHandlers();
   setupRandomButtons();
+
+  const languageSelector = document.querySelector(".language-selector select");
+  languageSelector.addEventListener("change", changeLanguage);
 }
 
 function setupRatingBarClickHandlers() {
@@ -131,7 +217,6 @@ function setupSubmitButtonHandler() {
     saveVotedPokemon(POKEMON_ID);
     document.querySelector(".rating-section").style.display = "none";
 
-    // Scroll vers le haut après le vote
     window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
@@ -176,7 +261,7 @@ function setupSearchHandlers() {
 
 async function fetchSuggestions(query, container) {
   try {
-    const response = await fetch(`${API_URLS.SEARCH_STARTER}/${query}`);
+    const response = await fetch(`${API_URLS.SEARCH_STARTER}/${selectedLanguage}/${query}`);
     const results = await response.json();
     container.innerHTML = "";
     results.forEach((pokemon) => createSuggestionItem(pokemon, container));
@@ -188,10 +273,11 @@ async function fetchSuggestions(query, container) {
 function createSuggestionItem(pokemon, container) {
   const suggestion = document.createElement("div");
   suggestion.className = "suggestion-item";
-  suggestion.textContent = pokemon.name_en;
+  const nameKey = `name_${selectedLanguage}`;
+  suggestion.textContent = pokemon[nameKey] || pokemon.name_en;
   suggestion.addEventListener("click", () => {
-    document.getElementById("pokemon-search").value = ""; // Reset searchbox
-    window.location.href = `?pokemon=${pokemon.id}`; // Change l'URL au lieu de loadPokemon direct
+    document.getElementById("pokemon-search").value = "";
+    window.location.href = `?pokemon=${pokemon.id}`;
     container.style.display = "none";
   });
   container.appendChild(suggestion);
@@ -207,7 +293,7 @@ async function getUnratedRandomStarter() {
     const response = await fetch(API_URLS.GET_UNRATED_RANDOM_STARTER);
     const data = await response.json();
     if (data.id) {
-      window.location.href = `?pokemon=${data.id}`; // Redirection avec paramètre
+      window.location.href = `?pokemon=${data.id}`;
     }
   } catch (error) {
     console.error("Erreur lors de la récupération du starter non noté:", error);
@@ -217,13 +303,12 @@ async function getUnratedRandomStarter() {
 async function loadPokemon(pokemonId) {
   POKEMON_ID = pokemonId;
 
-  // Masquer le message de bienvenue et afficher la carte Pokémon et la section de vote
   document.querySelector('.welcome-div').classList.add('hidden');
   document.querySelector('.pokemon-info-card').classList.remove('hidden');
   document.querySelector('.rating-section').classList.remove('hidden');
 
   try {
-    const [pokemonResponse, ratingsResponse] = await Promise.all([fetch(`${API_URLS.GET_POKEMON}/${pokemonId}`), fetch(`${API_URLS.GET_RATINGS}/${pokemonId}`)]);
+    const [pokemonResponse, ratingsResponse] = await Promise.all([fetch(`${API_URLS.GET_POKEMON}/${selectedLanguage}/${pokemonId}`), fetch(`${API_URLS.GET_RATINGS}/${pokemonId}`)]);
 
     const pokemon = await pokemonResponse.json();
     const ratings = await ratingsResponse.json();
@@ -237,13 +322,13 @@ async function loadPokemon(pokemonId) {
       ratingSection.style.display = "block";
     }
 
-    // Réinitialiser toutes les barres de votes à 1
     initializeRatingBars();
 
     updateRatingBars(ratings);
 
     const nameContainer = document.getElementById("pokemon-name");
-    nameContainer.innerHTML = `<h2>${pokemon.name_en}</h2>`;
+    const nameKey = `name_${selectedLanguage}`;
+    nameContainer.innerHTML = `<h2>${pokemon[nameKey] || pokemon.name_en}</h2>`;
 
     const imageElement = document.getElementById("pokemon-image");
     const showdownSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemonId}.gif`;
@@ -265,22 +350,23 @@ async function loadPokemon(pokemonId) {
 
     const abilityContainer = document.getElementById("pokemon-ability");
     abilityContainer.innerHTML = `
-            <div class="info-section">
-                <h3>Passive</h3>
-                <div class="ability-badge" data-tooltip="${pokemon.passive.description}">
-                    ${pokemon.passive.name}
-                </div>
-            </div>
-            <div class="info-section">
-                <h3>Cost</h3>
-                <div class="ability-badge">
-                    ${pokemon.cost}
-                </div>
-            </div>
-        `;
+      <div class="info-section">
+        <h3>${translations[selectedLanguage].labels.passive}</h3>
+        <div class="ability-badge" data-tooltip="${pokemon.passive.description}">
+          ${pokemon.passive.name}
+        </div>
+      </div>
+      <div class="info-section">
+        <h3>${translations[selectedLanguage].labels.cost}</h3>
+        <div class="ability-badge">
+          ${pokemon.cost}
+        </div>
+      </div>
+    `;
 
     const eggMovesContainer = document.getElementById("pokemon-egg-moves");
-    eggMovesContainer.innerHTML = '<h3>Egg Moves</h3><div class="egg-moves-separator"></div>';
+    eggMovesContainer.innerHTML = `<h3>${translations[selectedLanguage].labels.eggMoves}</h3><div class="egg-moves-separator"></div>`;
+
     const eggMoves = [pokemon.egg_move_1, pokemon.egg_move_2, pokemon.egg_move_3, pokemon.egg_move_4].filter(Boolean);
 
     const table = document.createElement("div");
@@ -308,23 +394,46 @@ async function loadPokemon(pokemonId) {
 
 async function fetchEggMoveData(moveName) {
   try {
-    const response = await fetch(`https://pokeapi.co/api/v2/move/${moveName}`);
+    const response = await fetch(`https://pokeapi.co/api/v2/move/${moveName.toLowerCase()}`);
     const data = await response.json();
 
-    const name = data.names.find((entry) => entry.language.name === "en")?.name || data.name;
-    const description = data.effect_entries.find((entry) => entry.language.name === "en")?.short_effect || data.flavor_text_entries.find((entry) => entry.language.name === "en")?.flavor_text;
-    const type = data.type.name;
-    const power = data.power;
-    const accuracy = data.accuracy;
+    let name, description;
 
-    return { name, description, type, power, accuracy };
+    name = data.names.find((entry) => entry.language.name === selectedLanguage)?.name;
+    description = data.flavor_text_entries.find((entry) => entry.language.name === selectedLanguage)?.flavor_text;
+
+    if (!name) {
+      name = data.names.find((entry) => entry.language.name === "en")?.name || data.name;
+    }
+    if (!description) {
+      description = data.flavor_text_entries.find((entry) => entry.language.name === "en")?.flavor_text || 
+                   translations[selectedLanguage].noDescription || "No description available";
+    }
+
+    if (selectedLanguage === "jp") {
+      description = description.replace(/\n/g, "").replace(/\f/g, "");
+      description = description.replace(/[0-9]/g, s => String.fromCharCode(s.charCodeAt(0) + 0xFEE0));
+    }
+
+    return {
+      name,
+      description,
+      type: data.type.name,
+      power: data.power,
+      accuracy: data.accuracy
+    };
   } catch (error) {
     console.error(`Erreur lors de la récupération des données pour le move ${moveName}:`, error);
-    return { name: moveName, description: "No description available", type: "normal", power: "--", accuracy: "--" };
+    return {
+      name: moveName,
+      description: translations[selectedLanguage].noDescription || "No description available",
+      type: "normal",
+      power: "--",
+      accuracy: "--"
+    };
   }
 }
 
-// Mise à jour des barres de notation globale avec les tooltips
 function updateRatingBars(ratings) {
   const noRating = document.querySelector(".no-ratings");
   const globalRating = document.querySelector(".global-rating");
@@ -340,7 +449,6 @@ function updateRatingBars(ratings) {
 
   document.getElementById("vote-count").textContent = ratings.vote_count;
 
-  // Ajout d'une fonction pour retrouver la clé correspondante dans CRITERIA_DESCRIPTIONS
   const getDescriptionKey = (type) => {
     const typeToKey = {
       'power': 'base',
@@ -359,12 +467,11 @@ function updateRatingBars(ratings) {
       const fill = bar.querySelector(".mini-rating-fill");
       const valueSpan = bar.querySelector(".rating-value");
       
-      // Trouver le tooltip-trigger correspondant dans le groupe parent
       const tooltipTrigger = bar.parentElement.querySelector('.tooltip-trigger');
       const descriptionKey = getDescriptionKey(type);
       
-      if (tooltipTrigger && descriptionKey && CRITERIA_DESCRIPTIONS[descriptionKey]) {
-        tooltipTrigger.setAttribute("data-tooltip", CRITERIA_DESCRIPTIONS[descriptionKey]);
+      if (tooltipTrigger && descriptionKey && translations[selectedLanguage].criteriaDescriptions[descriptionKey]) {
+        tooltipTrigger.setAttribute("data-tooltip", translations[selectedLanguage].criteriaDescriptions[descriptionKey]);
       }
 
       fill.style.width = `${value * 10}%`;
@@ -431,20 +538,18 @@ async function getRandomStarter() {
     const response = await fetch(API_URLS.GET_RANDOM_STARTER);
     const data = await response.json();
     if (data.id) {
-      window.location.href = `?pokemon=${data.id}`; // Redirection avec paramètre
+      window.location.href = `?pokemon=${data.id}`;
     }
   } catch (error) {
     console.error("Erreur lors de la récupération du starter aléatoire:", error);
   }
 }
 
-// Charger le top 20 des Pokémon les mieux notés
 async function loadTopRatedPokemons() {
   try {
     const response = await fetch(API_URLS.GET_TOP_RATED);
     const topRated = await response.json();
 
-    // Trier les Pokémon par la note globale (global_rating) avant de les afficher
     topRated.sort((a, b) => b.global_rating - a.global_rating);
 
     displayTopRatedPokemons(topRated);
@@ -454,13 +559,11 @@ async function loadTopRatedPokemons() {
   }
 }
 
-// Charger le top 20 des Pokémon les mieux notés
 async function loadWorstRatedPokemons() {
   try {
     const response = await fetch(API_URLS.GET_WORST_RATED);
     const worstRated = await response.json();
 
-    // Trier les Pokémon par la note globale (global_rating) avant de les afficher
     worstRated.sort((a, b) => a.global_rating - b.global_rating);
 
     displayWorstRatedPokemons(worstRated);
@@ -470,7 +573,6 @@ async function loadWorstRatedPokemons() {
   }
 }
 
-// Afficher le top 20 des Pokémon les mieux notés
 function displayTopRatedPokemons(pokemons) {
   const grid = document.getElementById("top-rated-grid");
   grid.innerHTML = "";
@@ -479,12 +581,11 @@ function displayTopRatedPokemons(pokemons) {
     const item = document.createElement("div");
     item.className = "top-rated-item";
     item.onclick = () => {
-      window.location.href = `?pokemon=${pokemon.id}`; // Redirection avec paramètre
+      window.location.href = `?pokemon=${pokemon.id}`;
     };
 
     const spriteUrl = getPokemonSprite(pokemon.id);
 
-    // Exemple dans une boucle ou fonction
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
     <div class="rank-badge">#${index + 1}</div>
@@ -497,7 +598,6 @@ function displayTopRatedPokemons(pokemons) {
   });
 }
 
-// Afficher le top 20 des Pokémon les mieux notés
 function displayWorstRatedPokemons(pokemons) {
   const grid = document.getElementById("worst-rated-grid");
   grid.innerHTML = "";
@@ -506,12 +606,11 @@ function displayWorstRatedPokemons(pokemons) {
     const item = document.createElement("div");
     item.className = "top-rated-item";
     item.onclick = () => {
-      window.location.href = `?pokemon=${pokemon.id}`; // Redirection avec paramètre
+      window.location.href = `?pokemon=${pokemon.id}`;
     };
 
     const spriteUrl = getPokemonSprite(pokemon.id);
 
-    // Exemple dans une boucle ou fonction
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
     <div class="rank-badge">#${index + 1}</div>
@@ -524,7 +623,6 @@ function displayWorstRatedPokemons(pokemons) {
   });
 }
 
-// Méthode pour obtenir le sprite Showdown ou fallback
 function getPokemonSprite(pokemonId, callback) {
   const showdownUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemonId}.gif`;
   const fallbackUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;

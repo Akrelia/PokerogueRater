@@ -92,6 +92,28 @@ nav {
   text-decoration: none;
 }
 
+.language-selector {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.language-selector select {
+  background-color: #374151;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: "Quicksand", sans-serif;
+  cursor: pointer;
+}
+
+.language-selector select:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #4b5563;
+}
+
 .container {
   max-width: 900px;
   margin: 0 auto;

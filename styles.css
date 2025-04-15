@@ -225,8 +225,9 @@ footer {
   border: none;
   border-radius: 8px;
   background-color: #dce0e6;
-  color: white;
-  font-size: 1rem;
+  color: rgb(0, 0, 0);
+  font-size: 1.1rem;
+  font-weight: bold;
   font-family: "Quicksand", sans-serif;
   box-sizing: border-box;
 }

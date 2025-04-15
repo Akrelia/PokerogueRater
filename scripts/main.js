@@ -66,52 +66,52 @@ function updateUIText() {
   document.querySelector(".footer-section h3").textContent = t.about;
   document.querySelector(".footer-section p").innerHTML = t.aboutText;
 
-  const footerSections = document.querySelectorAll('.footer-section h3');
+  const footerSections = document.querySelectorAll(".footer-section h3");
   footerSections[1].textContent = t.links || "Links";
-  const contactLink = document.querySelector('.footer-section a');
+  const contactLink = document.querySelector(".footer-section a");
   if (contactLink) {
     contactLink.textContent = t.footer?.contact || "Contact";
   }
 
-  document.querySelectorAll('.mini-rating-group .label-with-tooltip').forEach(label => {
-    const tooltipTrigger = label.querySelector('.tooltip-trigger');
+  document.querySelectorAll(".mini-rating-group .label-with-tooltip").forEach((label) => {
+    const tooltipTrigger = label.querySelector(".tooltip-trigger");
     if (tooltipTrigger) {
-      const type = label.closest('.mini-rating-group').querySelector('.mini-rating-bar').dataset.type;
+      const type = label.closest(".mini-rating-group").querySelector(".mini-rating-bar").dataset.type;
       const criteriaKey = getCriteriaKeyFromType(type);
       if (criteriaKey && t.criteria[criteriaKey]) {
-        label.childNodes[1].textContent = t.criteria[criteriaKey] + ' ';
+        label.childNodes[1].textContent = t.criteria[criteriaKey] + " ";
       }
     } else {
       label.textContent = t.overall;
     }
   });
 
-  document.querySelectorAll('.rating-group label').forEach(label => {
+  document.querySelectorAll(".rating-group label").forEach((label) => {
     const criteriaKey = getCriteriaKeyFromBar(label.nextElementSibling);
     if (criteriaKey && t.criteria[criteriaKey]) {
-      label.childNodes[0].textContent = t.criteria[criteriaKey] + ' ';
+      label.childNodes[0].textContent = t.criteria[criteriaKey] + " ";
     }
   });
 }
 
 function getCriteriaKeyFromType(type) {
   const typeToKey = {
-    'power': 'pokemon',
-    'cost': 'cost',
-    'egg_moves': 'eggMoves',
-    'ability': 'passive',
-    'out_of_the_box': 'outOfBox'
+    power: "pokemon",
+    cost: "cost",
+    egg_moves: "eggMoves",
+    ability: "passive",
+    out_of_the_box: "outOfBox",
   };
   return typeToKey[type];
 }
 
 function getCriteriaKeyFromBar(bar) {
   const criteriaToKey = {
-    'base': 'pokemon',
-    'cost': 'cost',
-    'eggMoves': 'eggMoves',
-    'passive': 'passive',
-    'outOfTheBox': 'outOfBox'
+    base: "pokemon",
+    cost: "cost",
+    eggMoves: "eggMoves",
+    passive: "passive",
+    outOfTheBox: "outOfBox",
   };
   return criteriaToKey[bar.dataset.criteria];
 }
@@ -121,22 +121,17 @@ let POKEMON_ID = "1";
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     const urlParams = new URLSearchParams(window.location.search);
-    const pokemonId = urlParams.get('pokemon');
+    const pokemonId = urlParams.get("pokemon");
 
     loadSavedLanguage();
     updateUIText();
 
-    await Promise.all([
-      loadTotalVotes(),
-      loadTopRatedPokemons(),
-      loadWorstRatedPokemons(),
-      pokemonId ? loadPokemon(pokemonId) : Promise.resolve()
-    ]);
+    await Promise.all([loadTotalVotes(), loadTopRatedPokemons(), loadWorstRatedPokemons(), pokemonId ? loadPokemon(pokemonId) : Promise.resolve()]);
 
     setupEventListeners();
 
-    document.getElementById('loader').style.display = 'none';
-    document.getElementById('main-content').style.display = 'block';
+    document.getElementById("loader").style.display = "none";
+    document.getElementById("main-content").style.display = "block";
   } catch (error) {
     console.error("Erreur lors du chargement initial:", error);
     alert("Une erreur est survenue lors du chargement des données");
@@ -164,7 +159,7 @@ function initializeRatingBars() {
 
     const criteria = bar.dataset.criteria;
     if (criteria && translations[selectedLanguage].criteriaDescriptions[criteria]) {
-      const tooltipTrigger = bar.parentElement.querySelector('.tooltip-trigger');
+      const tooltipTrigger = bar.parentElement.querySelector(".tooltip-trigger");
       if (tooltipTrigger) {
         tooltipTrigger.setAttribute("data-tooltip", translations[selectedLanguage].criteriaDescriptions[criteria]);
       }
@@ -303,9 +298,9 @@ async function getUnratedRandomStarter() {
 async function loadPokemon(pokemonId) {
   POKEMON_ID = pokemonId;
 
-  document.querySelector('.welcome-div').classList.add('hidden');
-  document.querySelector('.pokemon-info-card').classList.remove('hidden');
-  document.querySelector('.rating-section').classList.remove('hidden');
+  document.querySelector(".welcome-div").classList.add("hidden");
+  document.querySelector(".pokemon-info-card").classList.remove("hidden");
+  document.querySelector(".rating-section").classList.remove("hidden");
 
   try {
     const [pokemonResponse, ratingsResponse] = await Promise.all([fetch(`${API_URLS.GET_POKEMON}/${selectedLanguage}/${pokemonId}`), fetch(`${API_URLS.GET_RATINGS}/${pokemonId}`)]);
@@ -313,43 +308,45 @@ async function loadPokemon(pokemonId) {
     const pokemon = await pokemonResponse.json();
     const ratings = await ratingsResponse.json();
 
-    const votedPokemons = JSON.parse(localStorage.getItem("votedPokemons")) || [];
-    const ratingSection = document.querySelector(".rating-section");
+    if (pokemon.starter == 1) {
 
-    if (votedPokemons.includes(String(pokemonId))) {
-      ratingSection.style.display = "none";
-    } else {
-      ratingSection.style.display = "block";
-    }
+      const votedPokemons = JSON.parse(localStorage.getItem("votedPokemons")) || [];
+      const ratingSection = document.querySelector(".rating-section");
 
-    initializeRatingBars();
+      if (votedPokemons.includes(String(pokemonId))) {
+        ratingSection.style.display = "none";
+      } else {
+        ratingSection.style.display = "block";
+      }
 
-    updateRatingBars(ratings);
+      initializeRatingBars();
 
-    const nameContainer = document.getElementById("pokemon-name");
-    const nameKey = `name_${selectedLanguage}`;
-    nameContainer.innerHTML = `${pokemon[nameKey] || pokemon.name_en} <div class="pokemon-index">#${pokemonId}</div>`;
+      updateRatingBars(ratings);
 
-    const imageElement = document.getElementById("pokemon-image");
-    const showdownSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemonId}.gif`;
-    const fallbackSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
+      const nameContainer = document.getElementById("pokemon-name");
+      const nameKey = `name_${selectedLanguage}`;
+      nameContainer.innerHTML = `${pokemon[nameKey] || pokemon.name_en} <div class="pokemon-index">#${pokemonId}</div>`;
 
-    imageElement.src = showdownSprite;
-    imageElement.onerror = () => {
-      imageElement.src = fallbackSprite;
-    };
+      const imageElement = document.getElementById("pokemon-image");
+      const showdownSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemonId}.gif`;
+      const fallbackSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemonId}.png`;
 
-    const typesContainer = document.querySelector(".pokemon-types");
-    typesContainer.innerHTML = "";
-    pokemon.types.forEach((type) => {
-      const typeSpan = document.createElement("span");
-      typeSpan.className = `type ${type}`;
-      typeSpan.textContent = type;
-      typesContainer.appendChild(typeSpan);
-    });
+      imageElement.src = showdownSprite;
+      imageElement.onerror = () => {
+        imageElement.src = fallbackSprite;
+      };
 
-    const abilityContainer = document.getElementById("pokemon-ability");
-    abilityContainer.innerHTML = `
+      const typesContainer = document.querySelector(".pokemon-types");
+      typesContainer.innerHTML = "";
+      pokemon.types.forEach((type) => {
+        const typeSpan = document.createElement("span");
+        typeSpan.className = `type ${type}`;
+        typeSpan.textContent = type;
+        typesContainer.appendChild(typeSpan);
+      });
+
+      const abilityContainer = document.getElementById("pokemon-ability");
+      abilityContainer.innerHTML = `
       <div class="info-section">
         <h3>${translations[selectedLanguage].labels.passive}</h3>
         <div class="ability-badge" data-tooltip="${pokemon.passive.description}">
@@ -364,29 +361,34 @@ async function loadPokemon(pokemonId) {
       </div>
     `;
 
-    const eggMovesContainer = document.getElementById("pokemon-egg-moves");
-    eggMovesContainer.innerHTML = `<h3>${translations[selectedLanguage].labels.eggMoves}</h3><div class="egg-moves-separator"></div>`;
+      const eggMovesContainer = document.getElementById("pokemon-egg-moves");
+      eggMovesContainer.innerHTML = `<h3>${translations[selectedLanguage].labels.eggMoves}</h3><div class="egg-moves-separator"></div>`;
 
-    const eggMoves = [pokemon.egg_move_1, pokemon.egg_move_2, pokemon.egg_move_3, pokemon.egg_move_4].filter(Boolean);
+      const eggMoves = [pokemon.egg_move_1, pokemon.egg_move_2, pokemon.egg_move_3, pokemon.egg_move_4].filter(Boolean);
 
-    const table = document.createElement("div");
-    table.className = "egg-moves-table";
+      const table = document.createElement("div");
+      table.className = "egg-moves-table";
 
-    for (const move of eggMoves) {
-      const moveData = await fetchEggMoveData(move);
-      const moveElement = document.createElement("div");
-      moveElement.className = `egg-move-cell ${moveData.type}`;
-      moveElement.setAttribute("data-tooltip", `${moveData.description}\n\nPower: ${moveData.power || "--"}\nAccuracy: ${moveData.accuracy || "--"}`);
-      moveElement.innerHTML = `
+      for (const move of eggMoves) {
+        const moveData = await fetchEggMoveData(move);
+        const moveElement = document.createElement("div");
+        moveElement.className = `egg-move-cell ${moveData.type}`;
+        moveElement.setAttribute("data-tooltip", `${moveData.description}\n\nPower: ${moveData.power || "--"}\nAccuracy: ${moveData.accuracy || "--"}`);
+        moveElement.innerHTML = `
                 <div class="move-name-row">
                     <img src="images/types/${moveData.type}.png" alt="${moveData.type}">
                     <span class="move-name">${moveData.name}</span>
                 </div>
             `;
-      table.appendChild(moveElement);
+        table.appendChild(moveElement);
+      }
+
+      eggMovesContainer.appendChild(table);
+    } else {
+      document.querySelector(".rating-section").style.display = "none";
+      document.querySelector(".pokemon-info-card").classList.add("hidden");
     }
 
-    eggMovesContainer.appendChild(table);
   } catch (error) {
     console.error("Erreur:", error);
   }
@@ -406,13 +408,12 @@ async function fetchEggMoveData(moveName) {
       name = data.names.find((entry) => entry.language.name === "en")?.name || data.name;
     }
     if (!description) {
-      description = data.flavor_text_entries.find((entry) => entry.language.name === "en")?.flavor_text || 
-                   translations[selectedLanguage].noDescription || "No description available";
+      description = data.flavor_text_entries.find((entry) => entry.language.name === "en")?.flavor_text || translations[selectedLanguage].noDescription || "No description available";
     }
 
     if (selectedLanguage === "jp") {
       description = description.replace(/\n/g, "").replace(/\f/g, "");
-      description = description.replace(/[0-9]/g, s => String.fromCharCode(s.charCodeAt(0) + 0xFEE0));
+      description = description.replace(/[0-9]/g, (s) => String.fromCharCode(s.charCodeAt(0) + 0xfee0));
     }
 
     return {
@@ -420,7 +421,7 @@ async function fetchEggMoveData(moveName) {
       description,
       type: data.type.name,
       power: data.power,
-      accuracy: data.accuracy
+      accuracy: data.accuracy,
     };
   } catch (error) {
     console.error(`Erreur lors de la récupération des données pour le move ${moveName}:`, error);
@@ -429,7 +430,7 @@ async function fetchEggMoveData(moveName) {
       description: translations[selectedLanguage].noDescription || "No description available",
       type: "normal",
       power: "--",
-      accuracy: "--"
+      accuracy: "--",
     };
   }
 }
@@ -451,11 +452,11 @@ function updateRatingBars(ratings) {
 
   const getDescriptionKey = (type) => {
     const typeToKey = {
-      'power': 'base',
-      'cost': 'cost',
-      'egg_moves': 'eggMoves',
-      'ability': 'passive',
-      'out_of_the_box': 'outOfTheBox'
+      power: "base",
+      cost: "cost",
+      egg_moves: "eggMoves",
+      ability: "passive",
+      out_of_the_box: "outOfTheBox",
     };
     return typeToKey[type];
   };
@@ -466,10 +467,10 @@ function updateRatingBars(ratings) {
       const value = Math.max(1, Math.round((ratings[type] || 0) * 10) / 10);
       const fill = bar.querySelector(".mini-rating-fill");
       const valueSpan = bar.querySelector(".rating-value");
-      
-      const tooltipTrigger = bar.parentElement.querySelector('.tooltip-trigger');
+
+      const tooltipTrigger = bar.parentElement.querySelector(".tooltip-trigger");
       const descriptionKey = getDescriptionKey(type);
-      
+
       if (tooltipTrigger && descriptionKey && translations[selectedLanguage].criteriaDescriptions[descriptionKey]) {
         tooltipTrigger.setAttribute("data-tooltip", translations[selectedLanguage].criteriaDescriptions[descriptionKey]);
       }

@@ -34,7 +34,7 @@ h4 {
 body {
   margin: 0;
   padding: 0;
-  background-color: rgb(55, 64, 75);
+  background-color: #788ca3;
   font-family: "Quicksand", sans-serif;
   font-weight: 400;
   color: #fff;
@@ -73,15 +73,14 @@ nav {
   width: auto;
 }
 
-/* Modification du style existant du site-name pour l'adapter au nouveau conteneur */
 .site-name {
   color: #fbbf24;
   margin: 0;
   font-size: 2.2rem;
   font-weight: 600;
   text-align: center;
-  position: relative; /* Changé de absolute à relative */
-  transform: none; /* Supprimé car géré par le conteneur parent */
+  position: relative; 
+  transform: none; 
   width: auto;
 }
 
@@ -206,7 +205,7 @@ footer {
   justify-content: center;
   gap: 17px;
   padding: 10px;
-  background-color: #586679;
+  background-color: #345266;
   box-sizing: border-box;
   flex-wrap: wrap;
   position: relative;
@@ -217,7 +216,7 @@ footer {
   width: 300px;
   flex: 0 0 300px;
   box-sizing: border-box;
-  z-index: 1001; /* Assurez-vous que la search box est au-dessus des autres éléments */
+  z-index: 1001;
 }
 
 .search-box input {
@@ -225,7 +224,7 @@ footer {
   padding: 12px;
   border: none;
   border-radius: 8px;
-  background-color: #374151;
+  background-color: #dce0e6;
   color: white;
   font-size: 1rem;
   font-family: "Quicksand", sans-serif;
@@ -243,7 +242,7 @@ footer {
 
 .suggestions {
   position: absolute;
-  top: calc(100% + 5px); /* Positionnée juste en dessous de la barre de recherche */
+  top: calc(100% + 5px);
   left: 0;
   right: 0;
   background-color: #374151;
@@ -253,7 +252,7 @@ footer {
   z-index: 1000;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   padding: 10px 0;
-  display: none; /* Cacher par défaut */
+  display: none;
 }
 
 .suggestion-item {
@@ -411,7 +410,7 @@ footer {
 
 .mini-rating-bar {
   height: 25px;
-  background-color: #404a57;
+  background-color: #0000002d;
   border-radius: 6px;
   overflow: hidden;
   position: relative;
@@ -472,7 +471,7 @@ footer {
 
 .ability-badge,
 .cost-badge {
-  background-color: #424e5e;
+  background-color: #0000002c;
   padding: 8px 16px;
   border-radius: 8px;
   color: white;
@@ -504,9 +503,7 @@ footer {
   padding: 20px;
   padding-bottom: 45px;
   border-radius: 20px;
-  background: linear-gradient(135deg, #899bb6, #4f5b6d);
-
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: #3252683a;
 }
 
 .egg-moves-table {
@@ -575,8 +572,7 @@ footer {
   border-radius: 20px;
   padding-top: 15px;
   gap: 20px;
-  background: linear-gradient(135deg, #899bb6, #4f5b6d);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background: #3252683a;
 }
 
 .pokemon-egg-moves h3 {
@@ -609,6 +605,8 @@ footer {
 
 .rating-container {
   border-radius: 12px;
+  background-color: #32526871;
+  padding: 20px;
   margin: 20px 0;
 }
 
@@ -639,7 +637,7 @@ footer {
 
 .rating-bar {
   height: 30px;
-  background-color: #373f4b;
+  background-color: #00000034;
   border-radius: 15px;
   position: relative;
   cursor: pointer;
@@ -656,9 +654,9 @@ footer {
 .tooltip-trigger[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%; /* Positionne le tooltip juste au-dessus de l'élément */
+  bottom: 100%; 
   left: 50%;
-  transform: translateX(-50%); /* Centre le tooltip horizontalement */
+  transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.9);
   color: white;
   padding: 8px 12px;
@@ -669,8 +667,8 @@ footer {
   z-index: 1000;
   text-align: center;
   visibility: visible;
-  opacity: 1; /* S'assurer que le tooltip est visible */
-  transition: opacity 0.2s ease-in-out; /* Optionnel pour un effet de transition fluide */
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out; 
 }
 
 .label-with-tooltip {
@@ -738,8 +736,19 @@ footer {
 
 .pokemon-name {
   color: #fbbf24;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 600;
+  background-color: #35455a;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  margin-top: 25px;
+}
+
+.pokemon-index {
+  color: #b8b8b8;
+  font-size: 1.5rem;
+  display: inline;
 }
 
 .pokemon-content {
@@ -800,15 +809,12 @@ h3 {
 }
 
 .pokemon-ratings-overview {
-  background-color: #586679;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  background-color: #32526871;
   padding: 20px 20px 0px 20px;
   border-radius: 15px;
 }
 
 .rating-section {
-  background-color: rgb(84, 95, 110);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 30px;
   padding: 20px;
 }
@@ -996,10 +1002,6 @@ h3 {
     padding: 10px;
   }
 
-  .pokemon-name h2 {
-    font-size: 1.4rem;
-  }
-
   .ability-badge,
   .cost-badge {
     padding: 6px 12px;
@@ -1032,8 +1034,22 @@ h3 {
 }
 
 .top-rated-item {
-  position: relative; /* Nécessaire pour positionner le badge */
-  background-color: #5b677a;
+  position: relative;
+  background-color: #32526871;
+
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.worst-rated-item {
+  position: relative;
+  background-color: #32526871;
+
   border-radius: 8px;
   padding: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -1045,10 +1061,22 @@ h3 {
 
 .top-rated-item:hover {
   transform: scale(1.05);
-  background-color: #596980;
+  background-color: #41a86c;
+}
+
+.worst-rated-item:hover {
+  transform: scale(1.05);
+  background-color: #753a32;
 }
 
 .top-rated-item img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 10px;
+}
+
+.worst-rated-item img {
   width: 80px;
   height: 80px;
   object-fit: contain;
@@ -1061,15 +1089,32 @@ h3 {
   margin-bottom: 5px;
 }
 
+.worst-rated-item .pokemon-name {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
 .top-rated-item .rating {
   font-size: 1rem;
   font-weight: 900;
-  color: #e2c625;
+  color: #5dfc3d;
   border-radius: 10px;
-  background-color: #4b5463;
+  background-color: #00000027;
   width: 50%;
-  margin: 0 auto; /* centre horizontalement */
-  text-align: center; /* centre le texte à l'intérieur */
+  margin: 0 auto;
+  text-align: center;
+}
+
+.worst-rated-item .rating {
+  font-size: 1rem;
+  font-weight: 900;
+  color: #e47769;
+  border-radius: 10px;
+  background-color: #00000027;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center; 
 }
 
 .rank-badge {
@@ -1134,12 +1179,13 @@ h3 {
   margin-bottom: 30px;
   padding: 15px;
   border-radius: 15px;
-  background-color: rgba(94, 122, 141, 0.2);
+  background-color: #32526871;
+
 }
 
 .welcome-help {
-    margin-top: 80px;
-  background-color: rgba(23, 197, 125, 0.2);
+  margin-top: 80px;
+  background-color: rgba(0, 87, 51, 0.692);
   border-radius: 100px;
   padding: 1px;
 }
@@ -1153,18 +1199,17 @@ h3 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 1.5rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(221, 222, 223, 0.1));
+  background-color: #35455a;
   padding: 12px 25px;
-  display: flex; /* inline-flex → flex pour autoriser la largeur */
+  display: flex; 
   align-items: center;
-  justify-content: center; /* centrer le contenu */
+  justify-content: center;
   gap: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
-  width: 100%;         /* prend toute la largeur */
-  box-sizing: border-box; /* inclut padding dans la largeur */
+  width: 100%;
+  box-sizing: border-box; 
 }
-
 
 .ranking-title::before {
   content: "";

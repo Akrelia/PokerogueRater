@@ -56,7 +56,7 @@ function updateUIText() {
     welcomeHeader.querySelectorAll("p")[1].innerHTML = t.welcomeGoal;
   }
 
-  document.querySelector(".rating-section h2").textContent = t.rateThisPokemon;
+  document.querySelector("#rate-this-pokemon").textContent = t.rateThisPokemon;
   document.querySelector("#submit-rating").textContent = t.rateButton;
   document.querySelector(".no-ratings").textContent = t.noRatingYet;
 
@@ -328,7 +328,7 @@ async function loadPokemon(pokemonId) {
 
     const nameContainer = document.getElementById("pokemon-name");
     const nameKey = `name_${selectedLanguage}`;
-    nameContainer.innerHTML = `<h2>${pokemon[nameKey] || pokemon.name_en}</h2>`;
+    nameContainer.innerHTML = `${pokemon[nameKey] || pokemon.name_en} <div class="pokemon-index">#${pokemonId}</div>`;
 
     const imageElement = document.getElementById("pokemon-image");
     const showdownSprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/${pokemonId}.gif`;
@@ -604,7 +604,7 @@ function displayWorstRatedPokemons(pokemons) {
 
   pokemons.forEach((pokemon, index) => {
     const item = document.createElement("div");
-    item.className = "top-rated-item";
+    item.className = "worst-rated-item";
     item.onclick = () => {
       window.location.href = `?pokemon=${pokemon.id}`;
     };

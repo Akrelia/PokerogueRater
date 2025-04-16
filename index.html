@@ -100,7 +100,9 @@
                 <div class="no-ratings">No rating yet</div>
                 <div class="global-rating">
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip">Overall</div>
+                    <div class="label-with-tooltip">
+                      <span class="label-text">Overall</span>
+                    </div>
                     <div class="mini-rating-bar">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
@@ -108,35 +110,50 @@
                   </div>
                   <div class="separator"></div>
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Pokémon</div>
+                    <div class="label-with-tooltip">
+                      <span class="tooltip-trigger" data-tooltip="How the Pokémon and its evolution are good, including base stats, abilities, and typing.">?</span>
+                      <span class="label-text">Pokémon</span>
+                    </div>
                     <div class="mini-rating-bar" data-type="power">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
                     </div>
                   </div>
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Cost</div>
+                    <div class="label-with-tooltip">
+                      <span class="tooltip-trigger" data-tooltip="Cost-effectiveness of the Pokémon and if it can carry over the end-game.">?</span>
+                      <span class="label-text">Cost</span>
+                    </div>
                     <div class="mini-rating-bar" data-type="cost">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
                     </div>
                   </div>
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Egg Moves</div>
+                    <div class="label-with-tooltip">
+                      <span class="tooltip-trigger" data-tooltip="How valuable the egg moves are for the Pokémon's overall effectiveness.">?</span>
+                      <span class="label-text">Egg Moves</span>
+                    </div>
                     <div class="mini-rating-bar" data-type="egg_moves">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
                     </div>
                   </div>
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Passive</div>
+                    <div class="label-with-tooltip">
+                      <span class="tooltip-trigger" data-tooltip="How impactful and game-changing the Pokémon's passive is and possible combo with abilities.">?</span>
+                      <span class="label-text">Passive</span>
+                    </div>
                     <div class="mini-rating-bar" data-type="ability">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
                     </div>
                   </div>
                   <div class="mini-rating-group">
-                    <div class="label-with-tooltip"><span class="tooltip-trigger">?</span>Out of the box</div>
+                    <div class="label-with-tooltip">
+                      <span class="tooltip-trigger" data-tooltip="How viable the Pokémon is without requiring TMs, items, or evolution.">?</span>
+                      <span class="label-text">Out of the box</span>
+                    </div>
                     <div class="mini-rating-bar" data-type="out_of_the_box">
                       <div class="mini-rating-fill"></div>
                       <span class="rating-value">0/10</span>
@@ -167,7 +184,7 @@
           <div class="rating-container">
             <div class="rating-group">
               <label>
-                Pokémon
+                <span class="label-text">Pokémon</span>
                 <span id="tooltip-pokemon" class="tooltip-trigger" data-tooltip="How the Pokémon and its evolution are good, including base stats, abilities, and typing.">?</span>
               </label>
               <div class="rating-bar" data-criteria="base" data-value="0">
@@ -178,7 +195,7 @@
 
             <div class="rating-group">
               <label>
-                Cost
+                <span class="label-text">Cost</span>
                 <span id="tooltip-cost" class="tooltip-trigger" data-tooltip="Cost-effectiveness of the Pokémon and if it can carry over the end-game.">?</span>
               </label>
               <div class="rating-bar" data-criteria="cost" data-value="0">
@@ -189,7 +206,7 @@
 
             <div class="rating-group">
               <label>
-                Egg Moves
+                <span class="label-text">Egg Moves</span>
                 <span id="tooltip-egg-moves" class="tooltip-trigger" data-tooltip="How valuable the egg moves are for the Pokémon's overall effectiveness.">?</span>
               </label>
               <div class="rating-bar" data-criteria="eggMoves" data-value="0">
@@ -200,7 +217,7 @@
 
             <div class="rating-group">
               <label>
-                Passive
+                <span class="label-text">Passive</span>
                 <span id="tooltip-passive" class="tooltip-trigger" data-tooltip="How impactful and game-changing the Pokémon's passive is and possible combo with abilities.">?</span>
               </label>
               <div class="rating-bar" data-criteria="passive" data-value="0">
@@ -210,7 +227,7 @@
             </div>
             <div class="rating-group">
               <label>
-                Out of the box
+                <span class="label-text">Out of the box</span>
                 <span id="tooltip-out-of-the-box" class="tooltip-trigger" data-tooltip="How viable the Pokémon is without requiring TMs, items, or evolution.">?</span>
               </label>
               <div class="rating-bar" data-criteria="outOfTheBox" data-value="0">
@@ -237,12 +254,12 @@
       </div>
       <div class="top-flop">
         <div class="top-rated-container">
-          <h2 class="ranking-title top-title">Top 10</h2>
+          <h2 class="ranking-title top-title">Top 20</h2>
           <div class="top-rated-grid" id="top-rated-grid"></div>
         </div>
 
         <div class="top-rated-container">
-          <h2 class="ranking-title worst-title">Worst 10</h2>
+          <h2 class="ranking-title worst-title">Worst 20</h2>
           <div class="top-rated-grid" id="worst-rated-grid"></div>
         </div>
       </div>

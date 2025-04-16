@@ -46,42 +46,106 @@ function changeLanguage() {
 function updateUIText() {
   const t = translations[selectedLanguage];
 
-  document.querySelector(".site-name").textContent = t.siteTitle;
-  document.querySelector("#pokemon-search").placeholder = t.searchPlaceholder;
-  document.querySelector("#random-pokemon span").textContent = t.randomButton;
-  document.querySelector("#random-unrated-pokemon span").textContent = t.randomUnratedButton;
+  const siteName = document.querySelector(".site-name");
+  if (siteName) siteName.textContent = t.siteTitle;
+
+  const searchPlaceholder = document.querySelector("#pokemon-search");
+  if (searchPlaceholder) searchPlaceholder.placeholder = t.searchPlaceholder;
+
+  const randomButton = document.querySelector("#random-pokemon span");
+  if (randomButton) randomButton.textContent = t.randomButton;
+
+  const randomUnratedButton = document.querySelector("#random-unrated-pokemon span");
+  if (randomUnratedButton) randomUnratedButton.textContent = t.randomUnratedButton;
 
   const welcomeHeader = document.querySelector(".welcome-header");
   if (welcomeHeader) {
-    welcomeHeader.querySelector("h2").innerHTML = t.welcomeTitle;
-    welcomeHeader.querySelectorAll("p")[0].innerHTML = t.welcomeText;
-    welcomeHeader.querySelectorAll("p")[1].innerHTML = t.welcomeGoal;
+    const h2 = welcomeHeader.querySelector("h2");
+    if (h2) h2.innerHTML = t.welcomeTitle;
+
+    const paragraphs = welcomeHeader.querySelectorAll("p");
+    if (paragraphs[0]) paragraphs[0].innerHTML = t.welcomeText;
+    if (paragraphs[1]) paragraphs[1].innerHTML = t.welcomeGoal;
   }
 
-  document.querySelector("#rate-this-pokemon").textContent = t.rateThisPokemon;
-  document.querySelector("#submit-rating").textContent = t.rateButton;
-  document.querySelector(".no-ratings").textContent = t.noRatingYet;
+  const rateThisPokemon = document.querySelector("#rate-this-pokemon");
+  if (rateThisPokemon) rateThisPokemon.textContent = t.rateThisPokemon;
 
-  document.querySelector(".top-title").textContent = t.topTitle;
-  document.querySelector(".worst-title").textContent = t.worstTitle;
+  const submitRating = document.querySelector("#submit-rating");
+  if (submitRating) submitRating.textContent = t.rateButton;
 
-  document.querySelector(".footer-section h3").textContent = t.about;
-  document.querySelector(".footer-section p").innerHTML = t.aboutText;
+  const noRatings = document.querySelector(".no-ratings");
+  if (noRatings) noRatings.textContent = t.noRatingYet;
+
+  const topTitle = document.querySelector(".top-title");
+  if (topTitle) topTitle.textContent = t.topTitle;
+
+  const worstTitle = document.querySelector(".worst-title");
+  if (worstTitle) worstTitle.textContent = t.worstTitle;
+
+  const aboutSection = document.querySelector(".footer-section h3");
+  if (aboutSection) aboutSection.textContent = t.about;
+
+  const aboutText = document.querySelector(".footer-section p");
+  if (aboutText) aboutText.innerHTML = t.aboutText;
 
   const footerSections = document.querySelectorAll(".footer-section h3");
-  footerSections[1].textContent = t.links || "Links";
+  if (footerSections[1]) footerSections[1].textContent = t.links || "Links";
+
   const contactLink = document.querySelector(".footer-section a");
-  if (contactLink) {
-    contactLink.textContent = t.footer?.contact || "Contact";
-  }
+  if (contactLink) contactLink.textContent = t.footer?.contact || "Contact";
 
   // Mettre à jour les tooltips directement via leurs IDs
-  document.querySelector("#tooltip-pokemon").setAttribute("data-tooltip", t.criteriaDescriptions.base);
-  document.querySelector("#tooltip-cost").setAttribute("data-tooltip", t.criteriaDescriptions.cost);
-  document.querySelector("#tooltip-egg-moves").setAttribute("data-tooltip", t.criteriaDescriptions.eggMoves);
-  document.querySelector("#tooltip-passive").setAttribute("data-tooltip", t.criteriaDescriptions.passive);
-  document.querySelector("#tooltip-out-of-the-box").setAttribute("data-tooltip", t.criteriaDescriptions.outOfTheBox);
-  document.querySelector("#tooltip-best-game-mode").setAttribute("data-tooltip", t.bestGameMode);
+  const tooltipPokemon = document.querySelector("#tooltip-pokemon");
+  if (tooltipPokemon) tooltipPokemon.setAttribute("data-tooltip", t.criteriaDescriptions.base);
+
+  const tooltipCost = document.querySelector("#tooltip-cost");
+  if (tooltipCost) tooltipCost.setAttribute("data-tooltip", t.criteriaDescriptions.cost);
+
+  const tooltipEggMoves = document.querySelector("#tooltip-egg-moves");
+  if (tooltipEggMoves) tooltipEggMoves.setAttribute("data-tooltip", t.criteriaDescriptions.eggMoves);
+
+  const tooltipPassive = document.querySelector("#tooltip-passive");
+  if (tooltipPassive) tooltipPassive.setAttribute("data-tooltip", t.criteriaDescriptions.passive);
+
+  const tooltipOutOfTheBox = document.querySelector("#tooltip-out-of-the-box");
+  if (tooltipOutOfTheBox) tooltipOutOfTheBox.setAttribute("data-tooltip", t.criteriaDescriptions.outOfTheBox);
+
+  const tooltipBestGameMode = document.querySelector("#tooltip-best-game-mode");
+  if (tooltipBestGameMode) tooltipBestGameMode.setAttribute("data-tooltip", t.bestGameMode);
+
+  // Mettre à jour les labels des critères
+  const overallLabel = document.querySelector("#overall-label-rating");
+  if (overallLabel) overallLabel.textContent = t.overall;
+
+  document.querySelectorAll(".mini-rating-group .label-with-tooltip span.label-text").forEach((label, index) => {
+    const criteriaKeys = ["overall", "pokemon", "cost", "eggMoves", "passive", "outOfTheBox"];
+    if (criteriaKeys[index] && label) {
+      label.textContent = t.criteria[criteriaKeys[index]];
+    }
+  });
+
+  document.querySelectorAll(".rating-group label span.label-text").forEach((label, index) => {
+    const criteriaKeys = ["pokemon", "cost", "eggMoves", "passive", "outOfTheBox"];
+    if (criteriaKeys[index] && label) {
+      label.textContent = t.criteria[criteriaKeys[index]];
+    }
+  });
+
+  // Mettre à jour les boutons de modes
+  const classicModeButton = document.querySelector("#classic-mode");
+  if (classicModeButton) classicModeButton.innerHTML = `<img src="images/classic-mode.png" alt="Classic" class="mode-icon" /> ${t.modeButtons.classic}`;
+
+  const bothModeButton = document.querySelector("#both-mode");
+  if (bothModeButton) bothModeButton.textContent = t.modeButtons.both;
+
+  const endlessModeButton = document.querySelector("#endless-mode");
+  if (endlessModeButton) endlessModeButton.innerHTML = `${t.modeButtons.endless} <img src="images/infinity-mode.png" alt="Endless" class="mode-icon" />`;
+
+  // Mettre à jour les labels dans le slider
+  const sliderLabels = document.querySelectorAll(".slider-labels span");
+  if (sliderLabels[0]) sliderLabels[0].innerHTML = `<img src="images/classic-mode.png" alt="Classic" class="slider-icon" /> ${t.sliderLabels.classic}`;
+  if (sliderLabels[1]) sliderLabels[1].innerHTML = `${t.sliderLabels.endless} <img src="images/infinity-mode.png" alt="Endless" class="slider-icon" />`;
 }
 
 function getCriteriaKeyFromType(type) {
@@ -90,7 +154,7 @@ function getCriteriaKeyFromType(type) {
     cost: "cost",
     egg_moves: "eggMoves",
     ability: "passive",
-    out_of_the_box: "outOfBox",
+    out_of_the_box: "outOfTheBox",
   };
   return typeToKey[type];
 }
@@ -101,7 +165,7 @@ function getCriteriaKeyFromBar(bar) {
     cost: "cost",
     eggMoves: "eggMoves",
     passive: "passive",
-    outOfTheBox: "outOfBox",
+    outOfTheBox: "outOfTheBox",
   };
   return criteriaToKey[bar.dataset.criteria];
 }
@@ -576,7 +640,7 @@ function displayTopRatedPokemons(pokemons) {
   const grid = document.getElementById("top-rated-grid");
   grid.innerHTML = "";
 
-  pokemons.forEach((pokemon, index) => {
+  pokemons.slice(0, 20).forEach((pokemon, index) => {
     const item = document.createElement("div");
     item.className = "top-rated-item";
     item.onclick = () => {
@@ -587,10 +651,10 @@ function displayTopRatedPokemons(pokemons) {
 
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
-    <div class="rank-badge">#${index + 1}</div>
-    <img src="${spriteUrl}" alt="${pokemon.id}">
-    <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
-  `;
+        <div class="rank-badge">#${index + 1}</div>
+        <img src="${spriteUrl}" alt="${pokemon.id}">
+        <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
+      `;
     });
 
     grid.appendChild(item);
@@ -601,7 +665,7 @@ function displayWorstRatedPokemons(pokemons) {
   const grid = document.getElementById("worst-rated-grid");
   grid.innerHTML = "";
 
-  pokemons.forEach((pokemon, index) => {
+  pokemons.slice(0, 20).forEach((pokemon, index) => {
     const item = document.createElement("div");
     item.className = "worst-rated-item";
     item.onclick = () => {
@@ -612,10 +676,10 @@ function displayWorstRatedPokemons(pokemons) {
 
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
-    <div class="rank-badge">#${index + 1}</div>
-    <img src="${spriteUrl}" alt="${pokemon.id}">
-    <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
-  `;
+        <div class="rank-badge">#${index + 1}</div>
+        <img src="${spriteUrl}" alt="${pokemon.id}">
+        <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
+      `;
     });
 
     grid.appendChild(item);

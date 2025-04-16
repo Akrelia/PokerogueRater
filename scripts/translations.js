@@ -9,11 +9,12 @@ const translations = {
     welcomeGoal: "Our goal is to build a database of ratings that can help players to choose their starter Pokémon.",
     votesText: "Over {0} votes already!",
     criteria: {
+      overall: "Overall",
       pokemon: "Pokémon",
       cost: "Cost",
       eggMoves: "Egg Moves",
       passive: "Passive",
-      outOfBox: "Out of the box",
+      outOfTheBox: "Out of the box",
     },
     labels: {
       passive: "Passive",
@@ -22,10 +23,9 @@ const translations = {
     },
     rateButton: "Rate",
     noRatingYet: "No rating yet",
-    overall: "Overall",
     voteCount: "Votes: {0}",
-    topTitle: "Top 10",
-    worstTitle: "Worst 10",
+    topTitle: "Top 20",
+    worstTitle: "Worst 20",
     about: "About",
     aboutText: "Rate My Starter is a tool for rating different starters in PokéRogue. This tool is not affiliated with PokéRogue.",
     contact: "Contact",
@@ -40,6 +40,15 @@ const translations = {
       outOfTheBox: "How viable the Pokémon is without requiring TMs, items, or evolution.",
     },
     bestGameMode: "Best mode for the Pokémon, if you don't know, just press 'Both'",
+    modeButtons: {
+      classic: "Classic",
+      both: "Both",
+      endless: "Endless",
+    },
+    sliderLabels: {
+      classic: "Classic",
+      endless: "Endless",
+    },
   },
   fr: {
     siteTitle: "Rate my Starter",
@@ -51,11 +60,12 @@ const translations = {
     welcomeGoal: "Notre objectif est de créer une base de données d'évaluations pour aider les joueurs à choisir leur Pokémon de départ.",
     votesText: "Déjà plus de {0} votes !",
     criteria: {
+      overall: "Global",
       pokemon: "Pokémon",
       cost: "Coût",
       eggMoves: "Capacités Œuf",
       passive: "Passif",
-      outOfBox: "Prêt à l'emploi",
+      outOfTheBox: "Prêt à l'emploi",
     },
     labels: {
       passive: "Passif",
@@ -64,10 +74,9 @@ const translations = {
     },
     rateButton: "Noter",
     noRatingYet: "Pas encore d'évaluation",
-    overall: "Global",
     voteCount: "Votes : {0}",
-    topTitle: "Top 10",
-    worstTitle: "Pire 10",
+    topTitle: "Top 20",
+    worstTitle: "Pire 20",
     about: "À propos",
     aboutText: "Rate My Starter est un outil d'évaluation des starters de PokéRogue. Cet outil n'est pas affilié à PokéRogue.",
     contact: "Contact",
@@ -82,6 +91,15 @@ const translations = {
       outOfTheBox: "Viabilité du Pokémon sans nécessiter de CT, d'objets ou attendre son évolution.",
     },
     bestGameMode: "Meilleur mode pour le Pokémon, si vous ne savez pas, appuyez simplement sur 'Tous'",
+    modeButtons: {
+      classic: "Classique",
+      both: "Tous",
+      endless: "Infini",
+    },
+    sliderLabels: {
+      classic: "Classique",
+      endless: "Infini",
+    },
   },
   de: {
     siteTitle: "Rate My Starter",
@@ -93,11 +111,12 @@ const translations = {
     welcomeGoal: "Unser Ziel ist es, eine Bewertungsdatenbank aufzubauen, die Spielern bei der Wahl ihres Start-Pokémon hilft.",
     votesText: "Bereits über {0} Bewertungen!",
     criteria: {
+      overall: "Gesamt",
       pokemon: "Pokémon",
       cost: "Kosten",
       eggMoves: "Ei-Attacken",
       passive: "Fähigkeit",
-      outOfBox: "Sofort einsetzbar",
+      outOfTheBox: "Sofort einsetzbar",
     },
     labels: {
       passive: "Fähigkeit",
@@ -107,10 +126,9 @@ const translations = {
     noDescription: "Keine Beschreibung verfügbar",
     rateButton: "Bewerten",
     noRatingYet: "Noch keine Bewertung",
-    overall: "Gesamt",
     voteCount: "Stimmen: {0}",
-    topTitle: "Top 10",
-    worstTitle: "Schlechteste 10",
+    topTitle: "Top 20",
+    worstTitle: "Schlechteste 20",
     about: "Über uns",
     aboutText: "Rate My Starter ist ein Tool zur Bewertung verschiedener Starter in PokéRogue. Dieses Tool ist nicht mit PokéRogue verbunden.",
     contact: "Kontakt",
@@ -122,14 +140,23 @@ const translations = {
       cost: "Kosten-Nutzen-Verhältnis des Pokémon.",
       eggMoves: "Wie wertvoll die Ei-Attacken für die Gesamteffektivität des Pokémon sind.",
       passive: "Wie einflussreich und spielverändernd die passive Fähigkeit des Pokémon ist.",
-      outOfBox: "Wie brauchbar das Pokémon ohne TMs, Items oder Entwicklung ist.",
+      outOfTheBox: "Wie brauchbar das Pokémon ohne TMs, Items oder Entwicklung ist.",
     },
     bestGameMode: "Bester Modus für das Pokémon, wenn Sie es nicht wissen, drücken Sie einfach 'Beide'",
+    modeButtons: {
+      classic: "Klassisch",
+      both: "Beide",
+      endless: "Endlos",
+    },
+    sliderLabels: {
+      classic: "Klassisch",
+      endless: "Endlos",
+    },
     links: "Links",
     footer: {
       contact: "Kontakt",
-      allRightsReserved: "Alle Rechte vorbehalten"
-    }
+      allRightsReserved: "Alle Rechte vorbehalten",
+    },
   },
   ja: {
     siteTitle: "Rate my Starter",
@@ -141,11 +168,12 @@ const translations = {
     welcomeGoal: "プレイヤーがスターターポケモンを選ぶ際の参考となる評価データベースの構築を目指しています。",
     votesText: "すでに{0}件の評価！",
     criteria: {
+      overall: "総合",
       pokemon: "ポケモン",
       cost: "コスト",
       eggMoves: "タマゴわざ",
       passive: "特性",
-      outOfBox: "即戦力",
+      outOfTheBox: "即戦力",
     },
     labels: {
       passive: "特性",
@@ -155,10 +183,9 @@ const translations = {
     noDescription: "説明なし",
     rateButton: "評価する",
     noRatingYet: "まだ評価がありません",
-    overall: "総合",
     voteCount: "投票数：{0}",
-    topTitle: "トップ10",
-    worstTitle: "ワースト10",
+    topTitle: "トップ20",
+    worstTitle: "ワースト20",
     about: "概要",
     aboutText: "レートマイスターターは、PokéRogueのスターターを評価するためのツールです。PokéRogueとは無関係です。",
     contact: "お問い合わせ",
@@ -170,13 +197,22 @@ const translations = {
       cost: "ポケモンのコストパフォーマンス。",
       eggMoves: "ポケモンの総合的な性能におけるタマゴ技の価値。",
       passive: "ポケモンの特性がゲームに与える影響力。",
-      outOfBox: "技マシンやアイテム、進化なしでの実用性。",
+      outOfTheBox: "技マシンやアイテム、進化なしでの実用性。",
     },
     bestGameMode: "ポケモンに最適なモード、わからない場合は「両方」を押してください",
+    modeButtons: {
+      classic: "クラシック",
+      both: "両方",
+      endless: "無限",
+    },
+    sliderLabels: {
+      classic: "クラシック",
+      endless: "無限",
+    },
     links: "リンク",
     footer: {
       contact: "お問い合わせ",
-      allRightsReserved: "All rights reserved"
-    }
+      allRightsReserved: "All rights reserved",
+    },
   },
 };

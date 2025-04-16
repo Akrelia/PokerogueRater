@@ -443,9 +443,10 @@ function updateRatingBars(ratings) {
 
   // Mise à jour du slider "Mode Balance"
   const modeBalanceSlider = document.getElementById("mode-balance");
+  const modeBalanceIndicator = document.getElementById("mode-balance-indicator");
   const totalVotes = (ratings.classic || 0) + (ratings.endless || 0);
-  const classicPercentage = totalVotes > 0 ? Math.round((ratings.classic / totalVotes) * 100) : 50;
-  modeBalanceSlider.value = classicPercentage;
+  const endlessPercentage = totalVotes > 0 ? Math.round((ratings.endless / totalVotes) * 100) : 50; // Inverser la valeur
+  modeBalanceSlider.value = endlessPercentage;
 
   const getDescriptionKey = (type) => {
     const typeToKey = {

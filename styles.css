@@ -1328,3 +1328,11 @@ h3 {
 .centered-label {
   text-align: center;;
 }
+
+.mode-balance-indicator {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #ffffff;
+}

@@ -23,6 +23,8 @@ const API_URLS = {
   GET_TOTAL_VOTES: "https://pokeapi.crabdance.com/total-votes",
 };
 
+let selectedMode = { classic: true, endless: true }; // "Both" activé par défaut
+
 function loadSavedLanguage() {
   const savedLanguage = localStorage.getItem("selectedLanguage");
   if (savedLanguage) {
@@ -73,25 +75,13 @@ function updateUIText() {
     contactLink.textContent = t.footer?.contact || "Contact";
   }
 
-  document.querySelectorAll(".mini-rating-group .label-with-tooltip").forEach((label) => {
-    const tooltipTrigger = label.querySelector(".tooltip-trigger");
-    if (tooltipTrigger) {
-      const type = label.closest(".mini-rating-group").querySelector(".mini-rating-bar").dataset.type;
-      const criteriaKey = getCriteriaKeyFromType(type);
-      if (criteriaKey && t.criteria[criteriaKey]) {
-        label.childNodes[1].textContent = t.criteria[criteriaKey] + " ";
-      }
-    } else {
-      label.textContent = t.overall;
-    }
-  });
-
-  document.querySelectorAll(".rating-group label").forEach((label) => {
-    const criteriaKey = getCriteriaKeyFromBar(label.nextElementSibling);
-    if (criteriaKey && t.criteria[criteriaKey]) {
-      label.childNodes[0].textContent = t.criteria[criteriaKey] + " ";
-    }
-  });
+  // Mettre à jour les tooltips directement via leurs IDs
+  document.querySelector("#tooltip-pokemon").setAttribute("data-tooltip", t.criteriaDescriptions.base);
+  document.querySelector("#tooltip-cost").setAttribute("data-tooltip", t.criteriaDescriptions.cost);
+  document.querySelector("#tooltip-egg-moves").setAttribute("data-tooltip", t.criteriaDescriptions.eggMoves);
+  document.querySelector("#tooltip-passive").setAttribute("data-tooltip", t.criteriaDescriptions.passive);
+  document.querySelector("#tooltip-out-of-the-box").setAttribute("data-tooltip", t.criteriaDescriptions.outOfTheBox);
+  document.querySelector("#tooltip-best-game-mode").setAttribute("data-tooltip", t.bestGameMode);
 }
 
 function getCriteriaKeyFromType(type) {
@@ -129,6 +119,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await Promise.all([loadTotalVotes(), loadTopRatedPokemons(), loadWorstRatedPokemons(), pokemonId ? loadPokemon(pokemonId) : Promise.resolve()]);
 
     setupEventListeners();
+    setupModeButtons();
 
     document.getElementById("loader").style.display = "none";
     document.getElementById("main-content").style.display = "block";
@@ -221,7 +212,7 @@ function collectRatings() {
   document.querySelectorAll(".rating-bar").forEach((bar) => {
     ratings[bar.dataset.criteria] = parseInt(bar.dataset.value);
   });
-  return ratings;
+  return { ...ratings, ...selectedMode };
 }
 
 function saveVotedPokemon(pokemonId) {
@@ -450,6 +441,12 @@ function updateRatingBars(ratings) {
 
   document.getElementById("vote-count").textContent = ratings.vote_count;
 
+  // Mise à jour du slider "Mode Balance"
+  const modeBalanceSlider = document.getElementById("mode-balance");
+  const totalVotes = (ratings.classic || 0) + (ratings.endless || 0);
+  const classicPercentage = totalVotes > 0 ? Math.round((ratings.classic / totalVotes) * 100) : 50;
+  modeBalanceSlider.value = classicPercentage;
+
   const getDescriptionKey = (type) => {
     const typeToKey = {
       power: "base",
@@ -640,4 +637,32 @@ function getPokemonSprite(pokemonId, callback) {
     }
   };
   img.src = showdownUrl;
+}
+
+function setupModeButtons() {
+  const classicButton = document.getElementById("classic-mode");
+  const bothButton = document.getElementById("both-mode");
+  const endlessButton = document.getElementById("endless-mode");
+
+  bothButton.classList.add("active"); // Activer "Both" par défaut
+
+  classicButton.addEventListener("click", () => {
+    selectedMode = { classic: true, endless: false };
+    updateModeButtons(classicButton, bothButton, endlessButton);
+  });
+
+  bothButton.addEventListener("click", () => {
+    selectedMode = { classic: true, endless: true };
+    updateModeButtons(bothButton, classicButton, endlessButton);
+  });
+
+  endlessButton.addEventListener("click", () => {
+    selectedMode = { classic: false, endless: true };
+    updateModeButtons(endlessButton, classicButton, bothButton);
+  });
+}
+
+function updateModeButtons(activeButton, ...otherButtons) {
+  activeButton.classList.add("active");
+  otherButtons.forEach((button) => button.classList.remove("active"));
 }

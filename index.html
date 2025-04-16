@@ -142,21 +142,33 @@
                       <span class="rating-value">0/10</span>
                     </div>
                   </div>
-
+                  <div class="mode-slider">
+                    <input id="mode-balance" type="range" min="0" max="100" value="50" disabled />
+                    <div class="slider-labels">
+                      <span>
+                        <img src="images/classic-mode.png" alt="Classic" class="slider-icon" />
+                        <span>Classic</span>
+                      </span>
+                      <span>
+                        <span>Endless</span>
+                        <img src="images/infinity-mode.png" alt="Endless" class="slider-icon" />
+                      </span>
+                    </div>
+                  </div>
+                  <div class="separator"></div>
                   <div class="vote-count">Votes: <span id="vote-count">0</span></div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
         <div class="rating-section hidden">
-          <div id = "rate-this-pokemon" class="pokemon-name">Rate this Pokémon !</div>
+          <div id="rate-this-pokemon" class="pokemon-name">Rate this Pokémon !</div>
           <div class="rating-container">
             <div class="rating-group">
               <label>
                 Pokémon
-                <span class="tooltip-trigger">?</span>
+                <span id="tooltip-pokemon" class="tooltip-trigger" data-tooltip="How the Pokémon and its evolution are good, including base stats, abilities, and typing.">?</span>
               </label>
               <div class="rating-bar" data-criteria="base" data-value="0">
                 <div class="rating-fill"></div>
@@ -167,7 +179,7 @@
             <div class="rating-group">
               <label>
                 Cost
-                <span class="tooltip-trigger">?</span>
+                <span id="tooltip-cost" class="tooltip-trigger" data-tooltip="Cost-effectiveness of the Pokémon and if it can carry over the end-game.">?</span>
               </label>
               <div class="rating-bar" data-criteria="cost" data-value="0">
                 <div class="rating-fill"></div>
@@ -178,7 +190,7 @@
             <div class="rating-group">
               <label>
                 Egg Moves
-                <span class="tooltip-trigger">?</span>
+                <span id="tooltip-egg-moves" class="tooltip-trigger" data-tooltip="How valuable the egg moves are for the Pokémon's overall effectiveness.">?</span>
               </label>
               <div class="rating-bar" data-criteria="eggMoves" data-value="0">
                 <div class="rating-fill"></div>
@@ -189,7 +201,7 @@
             <div class="rating-group">
               <label>
                 Passive
-                <span class="tooltip-trigger">?</span>
+                <span id="tooltip-passive" class="tooltip-trigger" data-tooltip="How impactful and game-changing the Pokémon's passive is and possible combo with abilities.">?</span>
               </label>
               <div class="rating-bar" data-criteria="passive" data-value="0">
                 <div class="rating-fill"></div>
@@ -199,14 +211,26 @@
             <div class="rating-group">
               <label>
                 Out of the box
-                <span class="tooltip-trigger">?</span>
+                <span id="tooltip-out-of-the-box" class="tooltip-trigger" data-tooltip="How viable the Pokémon is without requiring TMs, items, or evolution.">?</span>
               </label>
               <div class="rating-bar" data-criteria="outOfTheBox" data-value="0">
                 <div class="rating-fill"></div>
                 <span class="rating-value">0/10</span>
               </div>
             </div>
-
+            <div class="separator"></div>
+            <div class="rating-group centered-group">
+              <label>
+                Best Game mode
+                <span id="tooltip-best-game-mode" class="tooltip-trigger" data-tooltip="Best mode for the Pokémon, if you don't know, just press 'Both'">?</span>
+              </label>
+            </div>
+            <div class="mode-buttons">
+              <button id="classic-mode" class="mode-button"><img src="images/classic-mode.png" alt="Classic" class="mode-icon" /> Classic</button>
+              <button id="both-mode" class="mode-button active">Both</button>
+              <button id="endless-mode" class="mode-button">Endless <img src="images/infinity-mode.png" alt="Endless" class="mode-icon" /></button>
+            </div>
+            <div class="separator"></div>
             <button id="submit-rating">Rate</button>
           </div>
         </div>

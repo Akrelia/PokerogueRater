@@ -39,6 +39,7 @@ const translations = {
       passive: "How impactful and game-changing the Pokémon's passive is and possible combo with abilities.",
       outOfTheBox: "How viable the Pokémon is without requiring TMs, items, or evolution.",
     },
+    bestGameMode: "Best mode for the Pokémon, if you don't know, just press 'Both'",
   },
   fr: {
     siteTitle: "Rate my Starter",
@@ -80,6 +81,7 @@ const translations = {
       passive: "Impact du passif du Pokémon sur son efficacité et sa complémentarité avec les talents.",
       outOfTheBox: "Viabilité du Pokémon sans nécessiter de CT, d'objets ou attendre son évolution.",
     },
+    bestGameMode: "Meilleur mode pour le Pokémon, si vous ne savez pas, appuyez simplement sur 'Tous'",
   },
   de: {
     siteTitle: "Rate My Starter",
@@ -122,6 +124,7 @@ const translations = {
       passive: "Wie einflussreich und spielverändernd die passive Fähigkeit des Pokémon ist.",
       outOfBox: "Wie brauchbar das Pokémon ohne TMs, Items oder Entwicklung ist.",
     },
+    bestGameMode: "Bester Modus für das Pokémon, wenn Sie es nicht wissen, drücken Sie einfach 'Beide'",
     links: "Links",
     footer: {
       contact: "Kontakt",
@@ -169,6 +172,7 @@ const translations = {
       passive: "ポケモンの特性がゲームに与える影響力。",
       outOfBox: "技マシンやアイテム、進化なしでの実用性。",
     },
+    bestGameMode: "ポケモンに最適なモード、わからない場合は「両方」を押してください",
     links: "リンク",
     footer: {
       contact: "お問い合わせ",

@@ -1380,3 +1380,8 @@ h3 {
   border-radius: 12px; /* Même bordure que le badge d'index */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+.worst-rated-item .rating {
+
+  background-color: #944848; /* Vert */
+
+}

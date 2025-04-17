@@ -15,38 +15,7 @@
       <div class="loader"></div>
     </div>
     <div id="main-content" style="display: none">
-      <nav>
-        <a href="https://pokerogue.net" target="_blank" class="logo-link">
-          <img src="images/logo.png" alt="Logo" />
-        </a>
-        <div class="title-container">
-          <a href="index.html" class="site-title-link">
-            <span class="site-name">Rate My Starter</span>
-            <img src="images/gts.png" alt="GTS" class="gts-icon" />
-          </a>
-        </div>
-        <div class="language-selector">
-          <select onchange="changeLanguage()">
-            <option value="en" selected>🇬🇧 English</option>
-            <option value="fr">🇫🇷 Français</option>
-            <option value="de">🇩🇪 Deutsch</option>
-            <option value="ja">🇯🇵 日本語</option>
-          </select>
-        </div>
-      </nav>
-
-      <div class="search-container">
-        <div class="search-box">
-          <input type="text" id="pokemon-search" autocomplete="off" placeholder="Search for a Starter..." />
-          <div class="suggestions"></div>
-        </div>
-        <button id="random-pokemon">
-          <span>Random</span>
-        </button>
-        <button id="random-unrated-pokemon">
-          <span>Random Unrated</span>
-        </button>
-      </div>
+      <navigation-menu></navigation-menu>
       <div class="container">
         <div class="welcome-div">
           <div class="welcome-message">
@@ -94,7 +63,6 @@
                 <div class="egg-moves-table"></div>
               </div>
             </div>
-
             <div class="pokemon-ratings-overview">
               <div class="global-stats">
                 <div class="no-ratings">No rating yet</div>
@@ -263,28 +231,10 @@
           <div class="top-rated-grid" id="worst-rated-grid"></div>
         </div>
       </div>
-      <footer>
-        <div class="footer-content">
-          <div class="footer-section">
-            <h3>About</h3>
-            <p><b>Rate My Starter</b> is a tool for rating different starters in <b>PokéRogue</b>. This tool is not affiliated with <b>PokéRogue</b>.</p>
-          </div>
-          <div class="footer-section">
-            <h3>Links</h3>
-            <ul>
-              <li><a href="mailto:builtbyakima@gmail.com">Contact</a></li>
-            </ul>
-          </div>
-          <div class="footer-section">
-            <h3>Credits</h3>
-            <p>Created by Akima</p>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <p>&copy; 2025 PokéRogue Starter Rater. All rights reserved.</p>
-        </div>
-      </footer>
+      <footer-section></footer-section>
     </div>
+    <script src="scripts/components.js"></script>
+    <script src="scripts/data.js"></script>
     <script src="scripts/translations.js"></script>
     <script src="scripts/main.js"></script>
   </body>

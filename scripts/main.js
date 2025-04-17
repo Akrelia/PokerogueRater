@@ -1,28 +1,5 @@
 let selectedLanguage = "en";
 
-const API_URLS2 = {
-  GET_POKEMON: "http://localhost:27350/pokemons/en",
-  SUBMIT_RATING: "http://localhost:27350/ratings",
-  GET_RATINGS: "http://localhost:27350/ratings",
-  GET_RANDOM_STARTER: "http://localhost:27350/random-starter",
-  GET_UNRATED_RANDOM_STARTER: "http://localhost:27350/random-unrated-starter",
-  SEARCH_STARTER: "http://localhost:27350/search-starter/en",
-  GET_TOP_RATED: "http://localhost:27350/top-rated",
-  GET_WORST_RATED: "http://localhost:27350/worst-rated",
-};
-
-const API_URLS = {
-  GET_POKEMON: "https://pokeapi.crabdance.com/pokemons",
-  SUBMIT_RATING: "https://pokeapi.crabdance.com/ratings",
-  GET_RATINGS: "https://pokeapi.crabdance.com/ratings",
-  GET_RANDOM_STARTER: "https://pokeapi.crabdance.com/random-starter",
-  GET_UNRATED_RANDOM_STARTER: "https://pokeapi.crabdance.com/random-unrated-starter",
-  SEARCH_STARTER: "https://pokeapi.crabdance.com/search-starter",
-  GET_TOP_RATED: "https://pokeapi.crabdance.com/top-rated",
-  GET_WORST_RATED: "https://pokeapi.crabdance.com/worst-rated",
-  GET_TOTAL_VOTES: "https://pokeapi.crabdance.com/total-votes",
-};
-
 let selectedMode = { classic: true, endless: true }; // "Both" activé par défaut
 
 function loadSavedLanguage() {
@@ -172,15 +149,62 @@ function getCriteriaKeyFromBar(bar) {
 
 let POKEMON_ID = "1";
 
+async function waitForComponentsToLoad() {
+  const navigationMenu = document.querySelector("navigation-menu");
+  const footerSection = document.querySelector("footer-section");
+
+  if (navigationMenu && footerSection) {
+    await customElements.whenDefined("navigation-menu");
+    await customElements.whenDefined("footer-section");
+
+    // Wait for the inner HTML of the components to be loaded
+    await new Promise((resolve) => {
+      const observer = new MutationObserver(() => {
+        if (navigationMenu.innerHTML && footerSection.innerHTML) {
+          observer.disconnect();
+          resolve();
+        }
+      });
+      observer.observe(navigationMenu, { childList: true });
+      observer.observe(footerSection, { childList: true });
+    });
+  }
+}
+
+function getPokemonIdFromUrl() {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get("pokemon") || "1"; // Default to "1" if no ID is provided
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const pokemonId = urlParams.get("pokemon");
-
+    await waitForComponentsToLoad();
     loadSavedLanguage();
     updateUIText();
 
-    await Promise.all([loadTotalVotes(), loadTopRatedPokemons(), loadWorstRatedPokemons(), pokemonId ? loadPokemon(pokemonId) : Promise.resolve()]);
+    POKEMON_ID = getPokemonIdFromUrl(); // Get the Pokémon ID from the URL
+
+    if (!POKEMON_ID || POKEMON_ID === "1") {
+      // Show welcome message if no Pokémon is selected
+      document.querySelector(".welcome-div").classList.remove("hidden");
+      document.querySelector(".pokemon-info-card").classList.add("hidden");
+      document.querySelector(".rating-section").classList.add("hidden");
+
+      // Load top-rated, worst-rated, and total votes even if no Pokémon is selected
+      await Promise.all([
+        loadTotalVotes(),
+        loadTopRatedPokemons(),
+        loadWorstRatedPokemons(),
+      ]);
+    } else {
+      // Load Pokémon if an ID is provided
+      await Promise.all([
+        loadTotalVotes(),
+        loadTopRatedPokemons(),
+        loadWorstRatedPokemons(),
+        loadPokemon(POKEMON_ID),
+      ]);
+    }
 
     setupEventListeners();
     setupModeButtons();

@@ -392,13 +392,7 @@ async function loadPokemon(pokemonId) {
       };
 
       const typesContainer = document.querySelector(".pokemon-types");
-      typesContainer.innerHTML = "";
-      pokemon.types.forEach((type) => {
-        const typeSpan = document.createElement("span");
-        typeSpan.className = `type ${type}`;
-        typeSpan.textContent = type;
-        typesContainer.appendChild(typeSpan);
-      });
+      displayPokemonTypes(pokemon.types, typesContainer);
 
       const abilityContainer = document.getElementById("pokemon-ability");
       abilityContainer.innerHTML = `
@@ -649,9 +643,11 @@ function displayTopRatedPokemons(pokemons) {
 
     const spriteUrl = getPokemonSprite(pokemon.id);
 
+    const rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "rank-default";
+
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
-        <div class="rank-badge">#${index + 1}</div>
+        <div class="rank-badge ${rankClass}">#${index + 1}</div>
         <img src="${spriteUrl}" alt="${pokemon.id}">
         <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
       `;
@@ -674,9 +670,11 @@ function displayWorstRatedPokemons(pokemons) {
 
     const spriteUrl = getPokemonSprite(pokemon.id);
 
+    const rankClass = index === 0 ? "rank-1" : index === 1 ? "rank-2" : index === 2 ? "rank-3" : "rank-default";
+
     getPokemonSprite(pokemon.id, (spriteUrl) => {
       item.innerHTML = `
-        <div class="rank-badge">#${index + 1}</div>
+        <div class="rank-badge ${rankClass}">#${index + 1}</div>
         <img src="${spriteUrl}" alt="${pokemon.id}">
         <div class="rating">${pokemon.global_rating.toFixed(1)}</div>
       `;
@@ -730,4 +728,20 @@ function setupModeButtons() {
 function updateModeButtons(activeButton, ...otherButtons) {
   activeButton.classList.add("active");
   otherButtons.forEach((button) => button.classList.remove("active"));
+}
+
+function displayPokemonTypes(types, container) {
+  container.innerHTML = "";
+  types.forEach((type) => {
+    const typeSpan = document.createElement("span");
+    typeSpan.className = `type ${type}`;
+
+    const typeIcon = document.createElement("img");
+    typeIcon.src = `images/types/${type}.png`;
+    typeIcon.alt = `${type} icon`;
+
+    typeSpan.appendChild(typeIcon);
+    typeSpan.appendChild(document.createTextNode(type));
+    container.appendChild(typeSpan);
+  });
 }

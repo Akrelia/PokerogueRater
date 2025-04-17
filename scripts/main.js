@@ -613,7 +613,7 @@ async function loadTopRatedPokemons() {
     const response = await fetch(API_URLS.GET_TOP_RATED);
     const topRated = await response.json();
 
-    topRated.sort((a, b) => b.global_rating - a.global_rating);
+    //topRated.sort((a, b) => b.global_rating - a.global_rating); // Since I use the formula, we don't need to sort it
 
     displayTopRatedPokemons(topRated);
     return response;
@@ -627,7 +627,7 @@ async function loadWorstRatedPokemons() {
     const response = await fetch(API_URLS.GET_WORST_RATED);
     const worstRated = await response.json();
 
-    worstRated.sort((a, b) => a.global_rating - b.global_rating);
+    //worstRated.sort((a, b) => a.global_rating - b.global_rating);
 
     displayWorstRatedPokemons(worstRated);
     return response;

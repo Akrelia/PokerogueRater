@@ -1,54 +1,11 @@
 // Ajout de la déclaration de la variable selectedLanguage
 const selectedLanguage = "en";
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const listContainer = document.getElementById("top-100");
-
-  try {
-    const response = await fetch(`${API_URLS.GET_TOP_RATED}?limit=100&language=${selectedLanguage}`);
-    const data = await response.json();
-
-    // Vérification de l'existence de l'élément avant d'ajouter des enfants
-    if (listContainer) {
-      displayPokemonList(data);
-    } else {
-      console.error("Erreur : l'élément listContainer est introuvable.");
-    }
-  } catch (error) {
-    console.error("Erreur lors du chargement des données :", error);
-  }
-});
-
 // Ajout des gestionnaires d'événements pour les boutons Ladder, Note et Votes
-const ladderButton = document.getElementById("ladder-button");
+const overallButton = document.getElementById("ladder-button");
 const noteButton = document.getElementById("note-button");
 const votesButton = document.getElementById("votes-button");
 
-ladderButton.addEventListener("click", async () => {
-  resetActiveButtons();
-  ladderButton.classList.add("active");
-  const response = await fetch(`${API_URLS.GET_TOP_RATED}?limit=100&language=${selectedLanguage}`);
-  const data = await response.json();
-  displayPokemonList(data);
-});
-
-noteButton.addEventListener("click", async () => {
-  resetActiveButtons();
-  noteButton.classList.add("active");
-  const response = await fetch(`${API_URLS.GET_TOP_RATED}?limit=100&language=${selectedLanguage}`);
-  const data = await response.json();
-  const sortedByNote = data.sort((a, b) => b.global_rating - a.global_rating);
-  displayPokemonList(sortedByNote);
-});
-
-votesButton.addEventListener("click", async () => {
-  resetActiveButtons();
-  votesButton.classList.add("active");
-  const response = await fetch(`${API_URLS.GET_TOP_RATED}?limit=100&language=${selectedLanguage}`);
-  const data = await response.json();
-  const sortedByVotes = data.sort((a, b) => b.vote_count - a.vote_count);
-  displayPokemonList(sortedByVotes);
-});
 
 // Gestion des clics sur les boutons de critères
 const criteriaButtons = document.querySelectorAll(".criteria-button");
@@ -98,3 +55,5 @@ function resetActiveButtons() {
   const allButtons = document.querySelectorAll(".button-group button, .criteria-button");
   allButtons.forEach((button) => button.classList.remove("active"));
 }
+
+overallButton.click();

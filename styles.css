@@ -1507,14 +1507,10 @@ h3 {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  background-color: #4caf50;
+  background-color: #e0651e;
   color: white;
   cursor: pointer;
   font-size: 1rem;
-}
-
-.button-group button:hover {
-  background-color: #45a049;
 }
 
 .criteria-selector {

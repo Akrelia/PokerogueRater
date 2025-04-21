@@ -37,7 +37,8 @@ body {
 }
 
 /* Typography */
-h2, h3 {
+h2,
+h3 {
   margin: 0;
   text-align: center;
 }
@@ -84,8 +85,8 @@ nav {
   font-size: 2.2rem;
   font-weight: 600;
   text-align: center;
-  position: relative; 
-  transform: none; 
+  position: relative;
+  transform: none;
   width: auto;
 }
 
@@ -147,7 +148,8 @@ footer {
   font-weight: 600;
 }
 
-.footer-section p, .footer-section ul li a {
+.footer-section p,
+.footer-section ul li a {
   color: #9ca3af;
   line-height: 1.6;
   margin: 0;
@@ -331,24 +333,60 @@ button:hover {
   margin-left: -5px;
 }
 
-.normal { background-color: #b6b6b6; }
-.fire { background-color: #c96f2f; }
-.water { background-color: #3463d1; }
-.electric { background-color: #e2ba18; }
-.grass { background-color: #7ecf56; }
-.ice { background-color: #67b4b4; }
-.fighting { background-color: #a52821; }
-.poison { background-color: #6e296e; }
-.ground { background-color: #d6af45; }
-.flying { background-color: #5e77ad; }
-.psychic { background-color: #b1375b; }
-.bug { background-color: #a3c93b; }
-.rock { background-color: #ad9940; }
-.ghost { background-color: #775db3; }
-.dragon { background-color: #3f32b6; }
-.dark { background-color: #3b3632; }
-.steel { background-color: #7d94b4; }
-.fairy { background-color: #ca729b; }
+.normal {
+  background-color: #b6b6b6;
+}
+.fire {
+  background-color: #c96f2f;
+}
+.water {
+  background-color: #3463d1;
+}
+.electric {
+  background-color: #e2ba18;
+}
+.grass {
+  background-color: #7ecf56;
+}
+.ice {
+  background-color: #67b4b4;
+}
+.fighting {
+  background-color: #a52821;
+}
+.poison {
+  background-color: #6e296e;
+}
+.ground {
+  background-color: #d6af45;
+}
+.flying {
+  background-color: #5e77ad;
+}
+.psychic {
+  background-color: #b1375b;
+}
+.bug {
+  background-color: #a3c93b;
+}
+.rock {
+  background-color: #ad9940;
+}
+.ghost {
+  background-color: #775db3;
+}
+.dragon {
+  background-color: #3f32b6;
+}
+.dark {
+  background-color: #3b3632;
+}
+.steel {
+  background-color: #7d94b4;
+}
+.fairy {
+  background-color: #ca729b;
+}
 
 .vote-count {
   color: #ffffff;
@@ -626,7 +664,7 @@ button:hover {
 .tooltip-trigger[data-tooltip]:hover::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 100%; 
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   background: rgba(0, 0, 0, 0.9);
@@ -640,7 +678,7 @@ button:hover {
   text-align: center;
   visibility: visible;
   opacity: 1;
-  transition: opacity 0.2s ease-in-out; 
+  transition: opacity 0.2s ease-in-out;
 }
 
 .label-with-tooltip {
@@ -1195,7 +1233,6 @@ h3 {
   padding: 15px;
   border-radius: 15px;
   background-color: #32526871;
-
 }
 
 .welcome-help {
@@ -1216,14 +1253,14 @@ h3 {
   font-size: 1.5rem;
   background-color: #35455a;
   padding: 12px 25px;
-  display: flex; 
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   width: 100%;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .ranking-title::before {
@@ -1339,7 +1376,7 @@ h3 {
 }
 
 .centered-label {
-  text-align: center;;
+  text-align: center;
 }
 
 .mode-balance-indicator {
@@ -1364,9 +1401,11 @@ h3 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .worst-rated-item .rating {
-
   background-color: #944848;
+}
 
+#top-100 {
+  margin-top: 20px;
 }
 
 /* Réduction de la taille des items du top 100 et ajustement du style */
@@ -1375,17 +1414,21 @@ h3 {
   align-items: center;
   justify-content: space-between;
   background-color: #f9f9f9;
-  border-radius: 10px;
+  border-radius: 20px;
+  cursor: pointer;
   padding: 5px 10px;
   margin: 5px 0;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  font-size: 0.9em;
+  font-size: 1.1em;
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 5px;
 }
 
 .pokemon-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .rank {
@@ -1394,7 +1437,7 @@ h3 {
   justify-content: center;
   width: 30px;
   height: 30px;
-  background-color: #4caf50;
+  background-color: #7a7a7a;
   color: white;
   font-weight: bold;
   border-radius: 50%;
@@ -1422,6 +1465,106 @@ h3 {
 }
 
 .votes {
-  font-size: 0.8em;
-  color: #888;
+  font-size: 0.9em;
+  color: #696969;
+}
+
+/* Ajout d'un écart de 5px entre chaque ligne du top */
+.pokemon-list-item {
+  margin-bottom: 5px;
+}
+
+/* Ajout d'une animation d'hover sur pokemon-list-item */
+.pokemon-list-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #a3f79b;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Ajouter un espacement pour les boutons des critères */
+.criteria-buttons {
+  margin-top: 20px;
+}
+
+/* Déplacement des styles inline du fichier HTML vers le fichier CSS */
+.top-controls-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.top-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.button-group button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.button-group button:hover {
+  background-color: #45a049;
+}
+
+.criteria-selector {
+  display: flex;
+  align-items: center;
+}
+
+.criteria-selector label {
+  margin-right: 10px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.criteria-selector select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+.selected-criteria {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #333;
+}
+
+.criteria-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.criteria-button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f59e0b;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.criteria-button:hover {
+  background-color: #d97706;
+}
+
+.criteria-button.active {
+  background-color: #b45309;
 }

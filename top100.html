@@ -13,6 +13,23 @@
   <body>
     <div id="main-content">
       <navigation-menu></navigation-menu>
+      <div class="top-controls-wrapper">
+        <div class="criteria-buttons">
+          <div class="button-group">
+            <button id="ladder-button">Overall</button>
+            <button id="note-button">Note</button>
+            <button id="votes-button">Votes</button>
+          </div>
+        </div>
+        <div class="criteria-buttons">
+          <button class="criteria-button" data-criteria="power">Pokémon</button>
+          <button class="criteria-button" data-criteria="cost">Coût</button>
+          <button class="criteria-button" data-criteria="egg_moves">Egg Moves</button>
+          <button class="criteria-button" data-criteria="ability">Passif</button>
+          <button class="criteria-button" data-criteria="out_of_the_box">Prêt à l'emploi</button>
+        </div>
+      </div>
+      <!-- Ajout d'un affichage pour le critère sélectionné -->
       <div id = "top-100" class="container"></div>
       <footer-section></footer-section>
     </div>
@@ -20,5 +37,6 @@
     <script src="scripts/data.js"></script>
     <script src="scripts/translations.js"></script>
     <script src="scripts/top.js"></script>
+
   </body>
 </html>

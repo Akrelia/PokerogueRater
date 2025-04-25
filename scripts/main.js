@@ -1,3 +1,5 @@
+  let selectedLanguage = localStorage.getItem("selectedLanguage") || "en";
+
 const API_URLS = {
   GET_POKEMON: "https://pokeapi.crabdance.com/pokemons",
   SUBMIT_RATING: "https://pokeapi.crabdance.com/ratings",
@@ -15,7 +17,6 @@ const translationCallbacks = [];
 document.addEventListener("DOMContentLoaded", async () => {
   try {
     await waitForComponentsToLoad();
-    loadSavedLanguage();
   } catch (error) {
     console.error("An error occurred:", error);
   }

@@ -1,4 +1,11 @@
-let selectedLanguage = "en";
+document.addEventListener("DOMContentLoaded", async () => {
+  try {
+   // loadSavedLanguage();
+ //changeLanguage();
+  } catch (error) {
+    console.error("An error occurred:", error);
+  }
+});
 
 function setupEventListeners() {
   setupSearchHandlers();
@@ -8,12 +15,9 @@ function setupEventListeners() {
   languageSelector.addEventListener("change", changeLanguage);
 }
 
-
 function loadSavedLanguage() {
-  const savedLanguage = localStorage.getItem("selectedLanguage");
-  if (savedLanguage) {
-    selectedLanguage = savedLanguage;
-    document.querySelector(".language-selector select").value = savedLanguage;
+  if (selectedLanguage) {
+    document.querySelector(".language-selector select").value = selectedLanguage;
   }
 }
 
@@ -22,16 +26,14 @@ function changeLanguage() {
   selectedLanguage = select.value;
   localStorage.setItem("selectedLanguage", selectedLanguage);
 
- for (const fn of translationCallbacks) {
-   fn();
- }
+  for (const fn of translationCallbacks) {
+    fn();
+  }
 }
 
 function setupSearchHandlers() {
   const searchInput = document.getElementById("pokemon-search");
   const suggestionsContainer = document.querySelector(".suggestions");
-
-
 
   searchInput.addEventListener("input", (e) => {
     suggestionsContainer.innerHTML = "";
@@ -75,7 +77,9 @@ function createSuggestionItem(pokemon, container) {
 }
 
 function setupRandomButtons() {
-  document.getElementById("hall-of-fame").addEventListener("click", () => { window.location.href = "top100.html";}); 
+  document.getElementById("hall-of-fame").addEventListener("click", () => {
+    window.location.href = "top100.html";
+  });
   document.getElementById("random-unrated-pokemon").addEventListener("click", getUnratedRandomStarter);
 }
 

@@ -280,7 +280,7 @@ const translations = {
   },
   ja: {
     rawNote: "生の評価",
-    siteTitle: "Rate my Starter",
+    siteTitle: "Rate My Starter",
     searchPlaceholder: "スターターを検索...",
     randomButton: "ランダム",
     randomUnratedButton: "未評価",

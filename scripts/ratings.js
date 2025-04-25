@@ -7,6 +7,8 @@ async function initialize() {
   try {
     translationCallbacks.push(updateRatingText);
 
+    updateRatingText();
+
     POKEMON_ID = getPokemonIdFromUrl(); // Get the Pokémon ID from the URL
 
     if (!POKEMON_ID || POKEMON_ID === "0") {

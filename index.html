@@ -1,27 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Rate My Starter - A PokéRogue tool</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="./images/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="./images/favicon-96x96.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
-    <!-- Ajout des méta-données pour le SEO -->
-    <meta name="description" content="Rate My Starter est un outil pour la communauté PokéRogue permettant d'évaluer et de noter les différents Pokémon disponibles. Découvrez les meilleurs starters et contribuez à la base de données communautaire." />
-    <meta name="keywords" content="Pokémon, PokéRogue, Rate My Starter, évaluation Pokémon, meilleurs starters, classement Pokémon, communauté Pokémon, PokéRogue outils" />
-    <meta name="author" content="PokéRogue Community" />
-    <meta property="og:title" content="Rate My Starter - Un outil pour évaluer vos Pokémon" />
-    <meta property="og:description" content="Découvrez les meilleurs Pokémon starters pour PokéRogue et contribuez à la base de données communautaire." />
-    <meta property="og:image" content="./images/logo.png" />
-    <meta property="og:url" content="https://pokeapi.crabdance.com" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Rate My Starter - Un outil pour évaluer vos Pokémon" />
-    <meta name="twitter:description" content="Découvrez les meilleurs Pokémon starters pour PokéRogue et contribuez à la base de données communautaire." />
-    <meta name="twitter:image" content="./images/logo.png" />
+    <link rel="icon" type="image/png" href="../images/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <meta-component></meta-component>
   </head>
+  <script src="scripts/components.js"></script>
+  <script src="scripts/main.js"></script>
   <body>
     <div id="loader" class="loader-container">
       <div class="loader"></div>
@@ -44,12 +31,11 @@
         </div>
 
         <div class="pokemon-info-card hidden">
-          <div class="pokemon-header">
-            <div class="pokemon-name" id="pokemon-name"></div>
-          </div>
+          <div class="pokemon-header"></div>
           <div class="pokemon-content">
             <div class="pokemon-main-info">
               <div class="pokemon-section">
+                <div class="pokemon-name" id="pokemon-name"></div>
                 <div class="pokemon-main-row">
                   <div class="pokemon-left">
                     <div class="pokemon-image-container">
@@ -68,14 +54,27 @@
                     </div>
                   </div>
                 </div>
+                <div class="separator-egg"></div>
+                <div id="pokemon-egg-moves" class="pokemon-egg-moves">
+                  <div class="egg-moves-table"></div>
+                </div>
               </div>
-
-              <div id="pokemon-egg-moves" class="pokemon-egg-moves">
-                <h3>Egg Moves</h3>
-                <div class="egg-moves-table"></div>
+              <div id="pokemon-links" class="pokemon-links">
+                <h3>Links</h3>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px">
+                  <button id="bulbapedia-button" class="link-button bulpedia">
+                    Bulbapedia
+                    <img src="images/link-icon.png" alt="Link Icon" />
+                  </button>
+                  <button id="smogon-button" class="link-button smogon">
+                    Smogon
+                    <img src="images/link-icon.png" alt="Link Icon" />
+                  </button>
+                </div>
               </div>
             </div>
             <div class="pokemon-ratings-overview">
+              <h3>Ratings</h3>
               <div class="global-stats">
                 <div class="no-ratings">No rating yet</div>
                 <div class="global-rating">
@@ -153,7 +152,8 @@
                     </div>
                   </div>
                   <div class="separator"></div>
-                  <div class="vote-count">Votes: <span id="vote-count">0</span></div>
+                  <div class="views-count" style="float: left"><span class="value-highlight" id="views-count">0</span> Views</div>
+                  <div class="vote-count" style="float: right"><span class="value-highlight" id="vote-count">0</span> Votes</div>
                 </div>
               </div>
             </div>
@@ -232,22 +232,23 @@
           </div>
         </div>
       </div>
-      <div class="top-flop">
-        <div class="top-rated-container">
-          <h2 class="ranking-title top-title">Top 20</h2>
-          <div class="top-rated-grid" id="top-rated-grid"></div>
-        </div>
+      <div class="container-tops">
+        <div class="top-flop">
+          <div class="top-rated-container">
+            <h2 class="ranking-title top-title">Top 10</h2>
+            <div class="top-rated-grid" id="top-rated-grid"></div>
+          </div>
 
-        <div class="top-rated-container">
-          <h2 class="ranking-title worst-title">Worst 20</h2>
-          <div class="top-rated-grid" id="worst-rated-grid"></div>
+          <div class="top-rated-container">
+            <h2 class="ranking-title worst-title">Worst 10</h2>
+            <div class="top-rated-grid" id="worst-rated-grid"></div>
+          </div>
         </div>
       </div>
       <footer-section></footer-section>
     </div>
-    <script src="scripts/components.js"></script>
-    <script src="scripts/data.js"></script>
-    <script src="scripts/translations.js"></script>
-    <script src="scripts/main.js"></script>
   </body>
+  <script src="scripts/translations.js"></script>
+  <script src="scripts/menu.js"></script>
+  <script src="scripts/ratings.js"></script>
 </html>

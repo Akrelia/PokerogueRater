@@ -1,7 +1,4 @@
 <nav>
-  <a href="https://pokerogue.net" target="_blank" class="logo-link">
-    <img src="images/logo.png" alt="Logo" />
-  </a>
   <div class="title-container">
     <a href="index.html" class="site-title-link">
       <span class="site-name">Rate My Starter</span>
@@ -17,15 +14,19 @@
     </select>
   </div>
 </nav>
+
 <div class="search-container">
+  <button id="hall-of-fame">
+    <img src="images/hof-icon.png" alt="Ball Icon" style="width: 20px; height: 20px; margin-right: 4px; vertical-align: middle;" />
+    <span>Hall of Fame</span>
+  </button>
+  <button id="random-unrated-pokemon">
+    <img src="images/ball.png" alt="Ball Icon" style="width: 20px; height: 20px; margin-right: 4px; vertical-align: middle;" />
+    <span>Random Starter</span>
+  </button>
+  <div class="vertical-separator">&nbsp;</div>
   <div class="search-box">
     <input type="text" id="pokemon-search" autocomplete="off" placeholder="Search for a Starter..." />
     <div class="suggestions"></div>
   </div>
-  <button id="random-pokemon">
-    <span>Random</span>
-  </button>
-  <button id="random-unrated-pokemon">
-    <span>Random Unrated</span>
-  </button>
 </div>

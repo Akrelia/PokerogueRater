@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Rate My Starter - A PokéRogue tool</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" type="image/png" href="./images/favicon-96x96.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="./images/favicon-96x96.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./images/apple-touch-icon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet" />
+    <title>Top 100 - Rate My Starter</title>
+    <link rel="icon" type="image/png" href="../images/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png" />
+    <meta-component></meta-component>
   </head>
+  <script src="scripts/components.js"></script>
+  <script src="scripts/main.js"></script>
   <body>
     <div id="main-content">
       <navigation-menu></navigation-menu>
@@ -17,26 +16,24 @@
         <div class="criteria-buttons">
           <div class="button-group">
             <button class="criteria-button" data-criteria="overall" id="ladder-button">Overall</button>
-            <button class="criteria-button" data-criteria="global_rating" id="note-button">Note</button>
+            <button class="criteria-button" data-criteria="global_rating" id="note-button">Raw Note</button>
             <button class="criteria-button" data-criteria="vote_count" id="votes-button">Votes</button>
           </div>
         </div>
         <div class="criteria-buttons">
-          <button class="criteria-button" data-criteria="power">Pokémon</button>
-          <button class="criteria-button" data-criteria="cost">Coût</button>
-          <button class="criteria-button" data-criteria="egg_moves">Egg Moves</button>
-          <button class="criteria-button" data-criteria="ability">Passif</button>
-          <button class="criteria-button" data-criteria="out_of_the_box">Prêt à l'emploi</button>
+          <button class="criteria-button" data-translate="pokemon" data-criteria="power">Pokémon</button>
+          <button class="criteria-button" data-translate="cost" data-criteria="cost">Coût</button>
+          <button class="criteria-button" data-translate="eggMoves" data-criteria="egg_moves">Egg Moves</button>
+          <button class="criteria-button" data-translate="passive" data-criteria="ability">Passif</button>
+          <button class="criteria-button" data-translate="outOfTheBox" data-criteria="out_of_the_box">Out of the box</button>
         </div>
       </div>
       <!-- Ajout d'un affichage pour le critère sélectionné -->
-      <div id = "top-100" class="container"></div>
+      <div id="top-100" class="container"></div>
       <footer-section></footer-section>
     </div>
-    <script src="scripts/components.js"></script>
-    <script src="scripts/data.js"></script>
-    <script src="scripts/translations.js"></script>
-    <script src="scripts/top.js"></script>
-
   </body>
+  <script src="scripts/translations.js"></script>
+  <script src="scripts/menu.js"></script>
+  <script src="scripts/top.js"></script>
 </html>

@@ -5,7 +5,8 @@ class NavigationMenu extends HTMLElement {
 
     translationCallbacks.push(updateMenuText);
     loadSavedLanguage();
-    
+    updateMenuText();
+
     await setupEventListeners();
   }
 }
@@ -16,7 +17,6 @@ class FooterSection extends HTMLElement {
     this.innerHTML = await response.text();
 
     translationCallbacks.push(updateFooterText);
-    changeLanguage(); // TODO : better handle of translation
   }
 }
 

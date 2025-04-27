@@ -26,6 +26,8 @@ function changeLanguage() {
   selectedLanguage = select.value;
   localStorage.setItem("selectedLanguage", selectedLanguage);
 
+console.log("yabusele");
+
   for (const fn of translationCallbacks) {
     fn();
   }

@@ -773,7 +773,10 @@ textarea {
   border-radius: 15px;
   position: relative;
   cursor: pointer;
-  overflow: hidden;
+}
+
+.rating-bar span {
+  margin-top: 10px;
 }
 
 .rating-fill {

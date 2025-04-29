@@ -197,7 +197,11 @@ async function loadPokemon(pokemonId) {
         imageElement.src = fallbackSprite;
       };
 
-      pokemonLeft.innerHTML += `<div class="info-section whole-rank">${createRankHTML(ratings.rank)}</div>`;
+      const rankContainer = document.querySelector(".whole-rank");
+
+      rankContainer.innerHTML = createRankHTML(ratings.rank);
+
+//      pokemonLeft.innerHTML += `<div class="info-section whole-rank">${createRankHTML(ratings.rank)}</div>`;
 
       const typesContainer = document.querySelector(".pokemon-types");
       displayPokemonTypes(pokemon.types, typesContainer);
@@ -345,7 +349,6 @@ function updateRatingBars(ratings) {
   document.getElementById("vote-count").textContent = ratings.vote_count;
   document.getElementById("views-count").textContent = ratings.views;
 
-  // Mise à jour du slider "Mode Balance"
   const modeBalanceSlider = document.getElementById("mode-balance");
   const modeBalanceIndicator = document.getElementById("mode-balance-indicator");
   const totalVotes = (ratings.classic || 0) + (ratings.endless || 0);
